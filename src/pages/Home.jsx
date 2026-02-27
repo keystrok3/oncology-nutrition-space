@@ -193,7 +193,7 @@ function Hero({ shouldReduce }) {
     <section
       className="relative min-h-[90vh] flex items-center justify-center bg-cover bg-center"
       // [PLACEHOLDER] — replace with actual hero image path once provided
-      style={{ backgroundImage: "url('/images/hero.jpg')" }}
+      style={{ backgroundImage: "url('/images/hero.png')" }}
     >
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-charcoal/65" />
