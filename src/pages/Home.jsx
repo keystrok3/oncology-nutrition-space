@@ -1,8 +1,94 @@
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+
+// ─── Animation Helpers ────────────────────────────────────────
+
+// Reusable hook — returns ref and whether element is in view.
+// Once in view, stays in view (triggers animation once only).
+function useReveal() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -80px 0px" });
+  return { ref, isInView };
+}
+
+// Fade up variant factory — respects reduced motion preference.
+// If reduced motion is preferred, elements simply appear without movement.
+function useFadeUpVariants(shouldReduce) {
+  return {
+    hidden: {
+      opacity: 0,
+      y: shouldReduce ? 0 : 30,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+}
+
+// Stagger container — staggers children animations
+function useStaggerVariants(shouldReduce, staggerDelay = 0.12) {
+  return {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduce ? 0 : staggerDelay,
+      },
+    },
+  };
+}
+
+// ─── Animated Counter ─────────────────────────────────────────
+// Counts up from 0 to the target number when triggered.
+// Non-numeric suffixes ("+", "%", "×", "<") are preserved.
+function AnimatedCounter({ value, isInView, shouldReduce }) {
+  const [display, setDisplay] = useState("0");
+
+  // Parse numeric part and any surrounding symbols
+  const prefix = value.match(/^[^0-9]*/)?.[0] ?? "";
+  const suffix = value.match(/[^0-9]*$/)?.[0] ?? "";
+  const numeric = parseFloat(value.replace(/[^0-9.]/g, ""));
+
+  useEffect(() => {
+    // If reduced motion or not yet in view, just show final value
+    if (!isInView || shouldReduce || isNaN(numeric)) {
+      setDisplay(value);
+      return;
+    }
+
+    const duration = 1500; // ms
+    const steps = 40;
+    const increment = numeric / steps;
+    let current = 0;
+    let step = 0;
+
+    const timer = setInterval(() => {
+      step++;
+      current = Math.min(current + increment, numeric);
+
+      // Format — if original had decimal, show one decimal place
+      const formatted = Number.isInteger(numeric)
+        ? Math.round(current).toString()
+        : current.toFixed(1);
+
+      setDisplay(`${prefix}${formatted}${suffix}`);
+
+      if (step >= steps) clearInterval(timer);
+    }, duration / steps);
+
+    return () => clearInterval(timer);
+  }, [isInView, shouldReduce]);
+
+  return <span>{display}</span>;
+}
 
 // ─── Data ─────────────────────────────────────────────────────
-// All placeholder content is marked with [PLACEHOLDER] for easy
-// handoff to the client for copy updates.
 
 const STATS = [
   { value: "500+",  label: "Patients Supported" },
@@ -15,42 +101,36 @@ const PROGRAMS = [
   {
     title: "Patient Education",
     description:
-      // [PLACEHOLDER] — replace with actual program description
       "Equipping cancer patients and their families with evidence-based nutritional knowledge to navigate treatment with confidence.",
     icon: "🎓",
   },
   {
     title: "Capacity Building",
     description:
-      // [PLACEHOLDER]
       "Training healthcare professionals and community health workers to integrate nutrition into oncology care across Kenya.",
     icon: "🏗️",
   },
   {
     title: "Outreach",
     description:
-      // [PLACEHOLDER]
       "Reaching underserved communities with practical, culturally relevant nutrition support for those affected by cancer.",
     icon: "🤝",
   },
   {
     title: "Institutional Collaboration",
     description:
-      // [PLACEHOLDER]
       "Partnering with hospitals, research institutions, and NGOs to embed nutrition into standard oncology protocols.",
     icon: "🏥",
   },
   {
     title: "Advocacy",
     description:
-      // [PLACEHOLDER]
       "Championing policy change to ensure nutrition is recognized as an essential component of cancer treatment in Kenya and beyond.",
     icon: "📢",
   },
 ];
 
 const BLOG_POSTS = [
-  // [PLACEHOLDER] — replace with real posts when blog is live
   {
     id: 1,
     category: "Nutrition Science",
@@ -78,7 +158,6 @@ const BLOG_POSTS = [
 ];
 
 const TESTIMONIALS = [
-  // [PLACEHOLDER] — replace with verified patient/caregiver testimonials
   {
     id: 1,
     name: "Jane M.",
@@ -103,122 +182,185 @@ const TESTIMONIALS = [
 ];
 
 // ─── Section Components ───────────────────────────────────────
-// Broken into small components for readability and future reuse.
 
 // ── Hero ──────────────────────────────────────────────────────
-function Hero() {
+// Hero animates on mount — no scroll trigger needed.
+function Hero({ shouldReduce }) {
+  const fadeUpVariants = useFadeUpVariants(shouldReduce);
+  const staggerVariants = useStaggerVariants(shouldReduce, 0.18);
+
   return (
     <section
       className="relative min-h-[90vh] flex items-center justify-center bg-cover bg-center"
       // [PLACEHOLDER] — replace with actual hero image path once provided
-      style={{ backgroundImage: "url('/images/hero.png')" }}
+      style={{ backgroundImage: "url('/images/hero.jpg')" }}
     >
-      {/* Dark overlay for readability over the background image */}
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-charcoal/65" />
 
-      {/* Hero content sits above the overlay */}
-      <div className="relative z-10 container-narrow text-center px-6 py-24">
-        {/* Eyebrow label */}
-        <p className="font-body text-sm uppercase tracking-widest text-lavender mb-4">
+      {/* Stagger container — children animate in sequence */}
+      <motion.div
+        className="relative z-10 container-narrow text-center px-6 py-24"
+        variants={staggerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {/* Eyebrow */}
+        <motion.p
+          variants={fadeUpVariants}
+          className="font-body text-sm uppercase tracking-widest text-lavender mb-4"
+        >
           Oncology Nutrition Space
-        </p>
+        </motion.p>
 
-        {/* Main headline — [PLACEHOLDER] */}
-        <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6">
+        {/* Headline */}
+        <motion.h1
+          variants={fadeUpVariants}
+          className="font-heading text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6"
+        >
           Nourishing the Fight <br className="hidden md:block" />
           Against Cancer
-        </h1>
+        </motion.h1>
 
-        {/* Subheadline — [PLACEHOLDER] */}
-        <p className="font-body text-lg text-neutral/90 max-w-2xl mx-auto mb-10 leading-relaxed">
+        {/* Subheadline */}
+        <motion.p
+          variants={fadeUpVariants}
+          className="font-body text-lg text-neutral/90 max-w-2xl mx-auto mb-10 leading-relaxed"
+        >
           Evidence-based oncology nutrition support for patients, caregivers,
           and clinicians in Kenya and beyond. Because what you eat during cancer
           care matters deeply.
-        </p>
+        </motion.p>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <motion.div
+          variants={fadeUpVariants}
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+        >
           <Link to="/contact" className="btn-primary px-8 py-3 text-base">
             Get Support
           </Link>
-          <Link to="/about" className="btn-outline px-8 py-3 text-base border-white text-white hover:bg-white hover:text-charcoal">
+          <Link
+            to="/about"
+            className="btn-outline px-8 py-3 text-base border-white text-white hover:bg-white hover:text-charcoal"
+          >
             Learn More
           </Link>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
 
 // ── Stats Strip ───────────────────────────────────────────────
-function StatsStrip() {
+function StatsStrip({ shouldReduce }) {
+  const { ref, isInView } = useReveal();
+  const staggerVariants = useStaggerVariants(shouldReduce, 0.15);
+  const fadeUpVariants = useFadeUpVariants(shouldReduce);
+
   return (
-    <section className="bg-sage py-10">
+    <section className="bg-sage py-10" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+          variants={staggerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {STATS.map(({ value, label }) => (
-            <div key={label}>
+            <motion.div key={label} variants={fadeUpVariants}>
               <p className="font-heading text-3xl font-bold text-white mb-1">
-                {value}
+                {/* Animated counter per stat */}
+                <AnimatedCounter
+                  value={value}
+                  isInView={isInView}
+                  shouldReduce={shouldReduce}
+                />
               </p>
               <p className="font-body text-sm text-white/80 uppercase tracking-wide">
                 {label}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-// ── Mission Statement ─────────────────────────────────────────
-function Mission() {
-  return (
-    <section className="section-padding bg-cream">
-      <div className="container-narrow text-center">
-        {/* Section eyebrow */}
-        <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
-          Our Mission
-        </p>
+// ── Mission ───────────────────────────────────────────────────
+function Mission({ shouldReduce }) {
+  const { ref, isInView } = useReveal();
+  const fadeUpVariants = useFadeUpVariants(shouldReduce);
+  const staggerVariants = useStaggerVariants(shouldReduce);
 
-        {/* [PLACEHOLDER] — replace with finalized mission statement */}
-        <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-6">
+  return (
+    <section className="section-padding bg-cream" ref={ref}>
+      <motion.div
+        className="container-narrow text-center"
+        variants={staggerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        <motion.p
+          variants={fadeUpVariants}
+          className="font-body text-sm uppercase tracking-widest text-sage mb-3"
+        >
+          Our Mission
+        </motion.p>
+
+        <motion.h2
+          variants={fadeUpVariants}
+          className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-6"
+        >
           Closing the Nutrition Gap <br className="hidden md:block" />
           in Cancer Care
-        </h2>
+        </motion.h2>
 
-        <p className="font-body text-base text-charcoal/80 leading-relaxed max-w-2xl mx-auto mb-6">
+        <motion.p
+          variants={fadeUpVariants}
+          className="font-body text-base text-charcoal/80 leading-relaxed max-w-2xl mx-auto mb-6"
+        >
           Across Kenya and much of Sub-Saharan Africa, cancer patients face a
           silent crisis alongside their diagnosis — malnutrition. Inadequate
           nutritional support compromises treatment outcomes, weakens immune
           response, and diminishes quality of life. We exist to change that.
-        </p>
+        </motion.p>
 
-        <p className="font-body text-base text-charcoal/80 leading-relaxed max-w-2xl mx-auto">
+        <motion.p
+          variants={fadeUpVariants}
+          className="font-body text-base text-charcoal/80 leading-relaxed max-w-2xl mx-auto"
+        >
           Through education, outreach, and institutional collaboration, the
           Oncology Nutrition Space is building a future where every cancer
           patient in Kenya receives the nutritional care they deserve —
           grounded in evidence, delivered with compassion.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     </section>
   );
 }
 
 // ── The Problem ───────────────────────────────────────────────
-function TheProblem() {
-  return (
-    <section className="section-padding bg-neutral/40">
-      <div className="container-wide px-6 md:px-12 lg:px-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+function TheProblem({ shouldReduce }) {
+  const { ref, isInView } = useReveal();
+  const fadeUpVariants = useFadeUpVariants(shouldReduce);
+  const staggerVariants = useStaggerVariants(shouldReduce);
 
+  return (
+    <section className="section-padding bg-neutral/40" ref={ref}>
+      <div className="container-wide px-6 md:px-12 lg:px-24">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+          variants={staggerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {/* Text side */}
-          <div>
+          <motion.div variants={fadeUpVariants}>
             <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
               The Problem
             </p>
-            {/* [PLACEHOLDER] */}
             <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-6">
               Nutrition Is Overlooked <br /> in Cancer Treatment
             </h2>
@@ -236,57 +378,76 @@ function TheProblem() {
               We are here to solve it — through structured programs, community
               support, and relentless advocacy for change.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Visual side — decorative stat callout */}
-          <div className="flex flex-col gap-6">
+          {/* Stat cards — each staggered individually */}
+          <motion.div
+            className="flex flex-col gap-6"
+            variants={useStaggerVariants(shouldReduce, 0.15)}
+          >
             {[
-              { stat: "85%",  detail: "of cancer patients face malnutrition during treatment" },
-              { stat: "2×",   detail: "higher risk of treatment complications in malnourished patients" },
+              { stat: "85%",   detail: "of cancer patients face malnutrition during treatment" },
+              { stat: "2×",    detail: "higher risk of treatment complications in malnourished patients" },
               { stat: "< 10%", detail: "of oncology units in Kenya have a dedicated nutritionist" },
             ].map(({ stat, detail }) => (
-              <div
+              <motion.div
                 key={stat}
+                variants={fadeUpVariants}
                 className="bg-white rounded-lg p-6 border-l-4 border-sage shadow-sm"
               >
                 <p className="font-heading text-3xl text-sage font-bold mb-1">
                   {stat}
                 </p>
-                {/* [PLACEHOLDER] — verify stats with client */}
                 <p className="font-body text-sm text-charcoal/70 leading-relaxed">
+                  {/* [PLACEHOLDER] — verify stats with client */}
                   {detail}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </div>
-
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
 // ── What We Do ────────────────────────────────────────────────
-function WhatWeDo() {
+function WhatWeDo({ shouldReduce }) {
+  const { ref, isInView } = useReveal();
+  const fadeUpVariants = useFadeUpVariants(shouldReduce);
+  const staggerVariants = useStaggerVariants(shouldReduce, 0.1);
+
   return (
-    <section className="section-padding bg-cream">
+    <section className="section-padding bg-cream" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
 
-        {/* Section header */}
-        <div className="text-center mb-12">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-12"
+          variants={fadeUpVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
             What We Do
           </p>
           <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug">
             Our Programs & Services
           </h2>
-        </div>
+        </motion.div>
 
-        {/* Program cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Cards — staggered */}
+        <motion.div
+          ref={ref}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={staggerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {PROGRAMS.map(({ title, description, icon }) => (
-            <div
+            <motion.div
               key={title}
+              variants={fadeUpVariants}
               className="bg-white rounded-lg p-6 border border-neutral hover:border-sage/40 hover:shadow-md transition-all duration-200"
             >
               <span className="text-3xl mb-4 block">{icon}</span>
@@ -296,33 +457,44 @@ function WhatWeDo() {
               <p className="font-body text-sm text-charcoal/70 leading-relaxed">
                 {description}
               </p>
-            </div>
+            </motion.div>
           ))}
 
-          {/* "See all programs" card */}
-          <div className="bg-sage/10 rounded-lg p-6 border border-sage/20 flex flex-col justify-center items-center text-center">
+          {/* CTA card */}
+          <motion.div
+            variants={fadeUpVariants}
+            className="bg-sage/10 rounded-lg p-6 border border-sage/20 flex flex-col justify-center items-center text-center"
+          >
             <p className="font-heading text-lg text-sage mb-3">
               Want to learn more?
             </p>
             <Link to="/programs" className="btn-primary">
               View All Programs
             </Link>
-          </div>
-        </div>
-
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
 // ── Blog Preview ──────────────────────────────────────────────
-function BlogPreview() {
+function BlogPreview({ shouldReduce }) {
+  const { ref, isInView } = useReveal();
+  const fadeUpVariants = useFadeUpVariants(shouldReduce);
+  const staggerVariants = useStaggerVariants(shouldReduce, 0.12);
+
   return (
-    <section className="section-padding bg-neutral/40">
+    <section className="section-padding bg-neutral/40" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
 
-        {/* Section header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        {/* Header */}
+        <motion.div
+          className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4"
+          variants={fadeUpVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           <div>
             <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
               From the Blog
@@ -337,13 +509,19 @@ function BlogPreview() {
           >
             View all articles →
           </Link>
-        </div>
+        </motion.div>
 
-        {/* Blog cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Cards */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          variants={staggerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {BLOG_POSTS.map(({ id, category, title, excerpt, date }) => (
-            <div
+            <motion.div
               key={id}
+              variants={fadeUpVariants}
               className="bg-white rounded-lg overflow-hidden border border-neutral hover:shadow-md transition-shadow duration-200 flex flex-col"
             >
               {/* Placeholder image strip */}
@@ -354,7 +532,6 @@ function BlogPreview() {
               </div>
 
               <div className="p-6 flex flex-col flex-1">
-                {/* Category tag */}
                 <span className="font-body text-xs uppercase tracking-widest text-lavender mb-2">
                   {category}
                 </span>
@@ -364,50 +541,60 @@ function BlogPreview() {
                 <p className="font-body text-sm text-charcoal/70 leading-relaxed flex-1">
                   {excerpt}
                 </p>
-                {/* Date / Coming soon badge */}
                 <p className="font-body text-xs text-neutral mt-4 pt-4 border-t border-neutral">
                   {date}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
-
+        </motion.div>
       </div>
     </section>
   );
 }
 
 // ── Testimonials ──────────────────────────────────────────────
-function Testimonials() {
+function Testimonials({ shouldReduce }) {
+  const { ref, isInView } = useReveal();
+  const fadeUpVariants = useFadeUpVariants(shouldReduce);
+  const staggerVariants = useStaggerVariants(shouldReduce, 0.15);
+
   return (
-    <section className="section-padding bg-cream">
+    <section className="section-padding bg-cream" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
 
-        <div className="text-center mb-12">
+        <motion.div
+          className="text-center mb-12"
+          variants={fadeUpVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
             Voices of Impact
           </p>
           <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug">
             What Our Community Says
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          variants={staggerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {TESTIMONIALS.map(({ id, name, role, quote }) => (
-            <div
+            <motion.div
               key={id}
+              variants={fadeUpVariants}
               className="bg-white rounded-lg p-6 border border-neutral shadow-sm flex flex-col"
             >
-              {/* Opening quote mark */}
               <span className="font-heading text-5xl text-lavender leading-none mb-2">
                 "
               </span>
-              {/* [PLACEHOLDER] quote */}
               <p className="font-body text-sm text-charcoal/80 leading-relaxed flex-1 mb-6">
                 {quote}
               </p>
-              {/* Attribution */}
               <div className="border-t border-neutral pt-4">
                 <p className="font-body text-sm font-medium text-charcoal">
                   {name}
@@ -416,45 +603,65 @@ function Testimonials() {
                   {role}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Link to full testimonials page */}
-        <div className="text-center mt-10">
+        <motion.div
+          className="text-center mt-10"
+          variants={fadeUpVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           <Link to="/testimonials" className="btn-outline">
             Read More Stories
           </Link>
-        </div>
-
+        </motion.div>
       </div>
     </section>
   );
 }
 
 // ── CTA Banner ────────────────────────────────────────────────
-function CTABanner() {
+function CTABanner({ shouldReduce }) {
+  const { ref, isInView } = useReveal();
+  const fadeUpVariants = useFadeUpVariants(shouldReduce);
+  const staggerVariants = useStaggerVariants(shouldReduce);
+
   return (
-    <section className="bg-sage section-padding">
-      <div className="container-narrow text-center px-6">
-        {/* [PLACEHOLDER] */}
-        <h2 className="font-heading text-3xl md:text-4xl text-white leading-snug mb-4">
+    <section className="bg-sage section-padding" ref={ref}>
+      <motion.div
+        className="container-narrow text-center px-6"
+        variants={staggerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        <motion.h2
+          variants={fadeUpVariants}
+          className="font-heading text-3xl md:text-4xl text-white leading-snug mb-4"
+        >
           You Don't Have to Navigate This Alone
-        </h2>
-        <p className="font-body text-base text-white/85 leading-relaxed max-w-xl mx-auto mb-10">
+        </motion.h2>
+
+        <motion.p
+          variants={fadeUpVariants}
+          className="font-body text-base text-white/85 leading-relaxed max-w-xl mx-auto mb-10"
+        >
           Whether you are a patient, caregiver, or clinician — we have
           resources, community, and support built for you.
-        </p>
+        </motion.p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          {/* WhatsApp community link — [PLACEHOLDER] update href */}
+        <motion.div
+          variants={fadeUpVariants}
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+        >
+          {/* [PLACEHOLDER] — update href with actual WhatsApp link */}
           <a
             href="https://wa.me/yournumberhere"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 bg-white text-sage font-body font-medium text-sm px-6 py-3 rounded-md hover:bg-neutral transition-colors duration-200"
           >
-            {/* WhatsApp icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -472,24 +679,28 @@ function CTABanner() {
           >
             Get in Touch
           </Link>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
 
 // ─── Page Assembly ────────────────────────────────────────────
 export default function Home() {
+  // Read system reduced motion preference once at the top level
+  // and pass it down to all animated sections
+  const shouldReduce = useReducedMotion();
+
   return (
     <>
-      <Hero />
-      <StatsStrip />
-      <Mission />
-      <TheProblem />
-      <WhatWeDo />
-      <BlogPreview />
-      <Testimonials />
-      <CTABanner />
+      <Hero shouldReduce={shouldReduce} />
+      <StatsStrip shouldReduce={shouldReduce} />
+      <Mission shouldReduce={shouldReduce} />
+      <TheProblem shouldReduce={shouldReduce} />
+      <WhatWeDo shouldReduce={shouldReduce} />
+      <BlogPreview shouldReduce={shouldReduce} />
+      <Testimonials shouldReduce={shouldReduce} />
+      <CTABanner shouldReduce={shouldReduce} />
     </>
   );
 }
