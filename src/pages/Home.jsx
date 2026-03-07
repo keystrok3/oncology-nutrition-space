@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import { apiFetch } from "../lib/api";
 
 // ─── Animation Helpers ────────────────────────────────────────
 
@@ -91,71 +92,45 @@ function AnimatedCounter({ value, isInView, shouldReduce }) {
 // ─── Data ─────────────────────────────────────────────────────
 
 const STATS = [
-  { value: "500+",  label: "Patients Supported" },
-  { value: "1,000+", label: "Community Members" },
-  { value: "3",     label: "Counties Reached" },
-  { value: "5+",    label: "Years of Practice" },
+  { value: "1,500+", label: "Community Members" },
+  { value: "47",     label: "Counties Reached"  },
+  { value: "3+",     label: "Years of Impact"   },
+  { value: "5+",     label: "Countries Reached" },
 ];
 
 const PROGRAMS = [
   {
     title: "Patient Education",
     description:
-      "Equipping cancer patients and their families with evidence-based nutritional knowledge to navigate treatment with confidence.",
+      "Providing cancer patients and their families with daily, evidence-based nutrition information to help them make informed decisions throughout their treatment journey.",
     icon: "🎓",
+  },
+  {
+    title: "Community Support",
+    description:
+      "An active online support community where patients, caregivers, and clinicians share experiences and access reliable oncology nutrition guidance.",
+    icon: "🤝",
+  },
+  {
+    title: "County Outreach",
+    description:
+      "Planned visits targeting cancer patients across Kenya's 47 counties, bringing oncology nutrition support directly to underserved communities.",
+    icon: "📍",
   },
   {
     title: "Capacity Building",
     description:
-      "Training healthcare professionals and community health workers to integrate nutrition into oncology care across Kenya.",
+      "Training healthcare professionals and community health workers to integrate evidence-based nutrition into oncology care across Kenya.",
     icon: "🏗️",
-  },
-  {
-    title: "Outreach",
-    description:
-      "Reaching underserved communities with practical, culturally relevant nutrition support for those affected by cancer.",
-    icon: "🤝",
-  },
-  {
-    title: "Institutional Collaboration",
-    description:
-      "Partnering with hospitals, research institutions, and NGOs to embed nutrition into standard oncology protocols.",
-    icon: "🏥",
   },
   {
     title: "Advocacy",
     description:
-      "Championing policy change to ensure nutrition is recognized as an essential component of cancer treatment in Kenya and beyond.",
+      "Championing policy change and public awareness to ensure nutrition is recognized as an essential component of cancer treatment in Kenya and beyond.",
     icon: "📢",
   },
 ];
 
-const BLOG_POSTS = [
-  {
-    id: 1,
-    category: "Nutrition Science",
-    title: "Why Nutrition Is the Missing Piece in Cancer Care",
-    excerpt:
-      "Malnutrition affects up to 85% of cancer patients globally. Here is why addressing it early changes outcomes.",
-    date: "Coming Soon",
-  },
-  {
-    id: 2,
-    category: "Patient Guidance",
-    title: "Eating Well During Chemotherapy: What the Evidence Says",
-    excerpt:
-      "Chemotherapy-induced nausea and appetite loss are common. Evidence-based strategies can help patients maintain strength.",
-    date: "Coming Soon",
-  },
-  {
-    id: 3,
-    category: "Caregiver Resources",
-    title: "How to Support a Loved One's Nutritional Needs During Treatment",
-    excerpt:
-      "Caregivers play a critical role in a patient's nutrition. Practical guidance for the people who show up every day.",
-    date: "Coming Soon",
-  },
-];
 
 const TESTIMONIALS = [
   {
@@ -177,7 +152,7 @@ const TESTIMONIALS = [
     name: "Dr. Amina O.",
     role: "Oncology Nurse",
     quote:
-      "The resources here are evidence-based and culturally relevant — exactly what our patients in Kenya need and rarely find.",
+      "The resources here are evidence-based and culturally relevant - exactly what our patients in Kenya need and rarely find.",
   },
 ];
 
@@ -313,28 +288,29 @@ function Mission({ shouldReduce }) {
           variants={fadeUpVariants}
           className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-6"
         >
-          Closing the Nutrition Gap <br className="hidden md:block" />
-          in Cancer Care
+          Transforming Cancer Care <br className="hidden md:block" />
+          Through Nutrition
         </motion.h2>
 
         <motion.p
           variants={fadeUpVariants}
           className="font-body text-base text-charcoal/80 leading-relaxed max-w-2xl mx-auto mb-6"
         >
-          Across Kenya and much of Sub-Saharan Africa, cancer patients face a
-          silent crisis alongside their diagnosis — malnutrition. Inadequate
-          nutritional support compromises treatment outcomes, weakens immune
-          response, and diminishes quality of life. We exist to change that.
+          Oncology Nutrition Space was born out of a deeply personal experience:
+          watching a loved one battle colorectal cancer while the critical role of
+          nutrition went unaddressed. Founded in Eldoret in 2022 by Registered
+          Nutritionist Nancy Muyoka Makhakha, it began as an online support group
+          and has since grown into a community of over 1,500 members across all 47
+          counties in Kenya and beyond.
         </motion.p>
 
         <motion.p
           variants={fadeUpVariants}
           className="font-body text-base text-charcoal/80 leading-relaxed max-w-2xl mx-auto"
         >
-          Through education, outreach, and institutional collaboration, the
-          Oncology Nutrition Space is building a future where every cancer
-          patient in Kenya receives the nutritional care they deserve —
-          grounded in evidence, delivered with compassion.
+          Our mission is simple but urgent: transforming cancer care through
+          evidence-based nutrition and community support because no patient
+          should face cancer without knowing how food can help them heal.
         </motion.p>
       </motion.div>
     </section>
@@ -366,7 +342,7 @@ function TheProblem({ shouldReduce }) {
             </h2>
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
               Up to 85% of cancer patients experience malnutrition at some
-              point during their treatment — yet nutritional care remains an
+              point during their treatment yet nutritional care remains an
               afterthought in most oncology settings across Africa.
             </p>
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
@@ -375,7 +351,7 @@ function TheProblem({ shouldReduce }) {
               survival odds. This is a solvable problem.
             </p>
             <p className="font-body text-base text-charcoal/80 leading-relaxed">
-              We are here to solve it — through structured programs, community
+              We are here to solve it through structured programs, community
               support, and relentless advocacy for change.
             </p>
           </motion.div>
@@ -477,12 +453,25 @@ function WhatWeDo({ shouldReduce }) {
     </section>
   );
 }
-
 // ── Blog Preview ──────────────────────────────────────────────
 function BlogPreview({ shouldReduce }) {
   const { ref, isInView } = useReveal();
-  const fadeUpVariants = useFadeUpVariants(shouldReduce);
-  const staggerVariants = useStaggerVariants(shouldReduce, 0.12);
+  const fadeUpVariants    = useFadeUpVariants(shouldReduce);
+  const staggerVariants   = useStaggerVariants(shouldReduce, 0.12);
+
+  const [posts,   setPosts]   = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch latest 3 published posts
+  useEffect(() => {
+    apiFetch("/api/posts")
+      .then(data => {
+        // Take only the 3 most recent
+        setPosts((data.posts ?? []).slice(0, 3));
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
   return (
     <section className="section-padding bg-neutral/40" ref={ref}>
@@ -511,117 +500,130 @@ function BlogPreview({ shouldReduce }) {
           </Link>
         </motion.div>
 
-        {/* Cards */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          variants={staggerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          {BLOG_POSTS.map(({ id, category, title, excerpt, date }) => (
-            <motion.div
-              key={id}
-              variants={fadeUpVariants}
-              className="bg-white rounded-lg overflow-hidden border border-neutral hover:shadow-md transition-shadow duration-200 flex flex-col"
-            >
-              {/* Placeholder image strip */}
-              <div className="h-40 bg-sage/10 flex items-center justify-center">
-                <span className="font-body text-xs text-sage/50 uppercase tracking-widest">
-                  Image Coming Soon
-                </span>
-              </div>
+        {/* Loading state */}
+        {loading && (
+          <p className="font-body text-sm text-charcoal/50 text-center py-12">
+            Loading articles...
+          </p>
+        )}
 
-              <div className="p-6 flex flex-col flex-1">
-                <span className="font-body text-xs uppercase tracking-widest text-lavender mb-2">
-                  {category}
-                </span>
-                <h3 className="font-heading text-base text-charcoal mb-2 leading-snug">
-                  {title}
-                </h3>
-                <p className="font-body text-sm text-charcoal/70 leading-relaxed flex-1">
-                  {excerpt}
-                </p>
-                <p className="font-body text-xs text-neutral mt-4 pt-4 border-t border-neutral">
-                  {date}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+        {/* No posts yet */}
+        {!loading && posts.length === 0 && (
+          <p className="font-body text-sm text-charcoal/50 text-center py-12">
+            Articles coming soon.
+          </p>
+        )}
+
+        {/* Cards */}
+        {!loading && posts.length > 0 && (
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            variants={staggerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+          >
+            {posts.map(({ id, slug, excerpt, published_at, author_name, categories, title, cover_image_url }) => (
+              <motion.div
+                key={id}
+                variants={fadeUpVariants}
+                className="bg-white rounded-lg overflow-hidden border border-neutral hover:shadow-md transition-shadow duration-200 flex flex-col"
+              >
+                {/* Cover image or placeholder */}
+                <div className="h-40 bg-sage/10 overflow-hidden">
+                  {cover_image_url ? (
+                    <img
+                      src={cover_image_url}
+                      alt={title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="font-body text-xs text-sage/50 uppercase tracking-widest">
+                        No Image
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-6 flex flex-col flex-1">
+                  {/* Category */}
+                  {categories?.length > 0 && (
+                    <span className="font-body text-xs uppercase tracking-widest text-lavender mb-2">
+                      {categories[0].title}
+                    </span>
+                  )}
+
+                  {/* Title */}
+                  <Link to={`/blog/${slug}`}>
+                    <h3 className="font-heading text-base text-charcoal hover:text-sage transition-colors duration-200 mb-2 leading-snug">
+                      {title}
+                    </h3>
+                  </Link>
+
+                  {/* Excerpt */}
+                  {excerpt && (
+                    <p className="font-body text-sm text-charcoal/70 leading-relaxed flex-1">
+                      {excerpt}
+                    </p>
+                  )}
+
+                  {/* Meta */}
+                  <div className="flex items-center gap-2 font-body text-xs text-charcoal/40 mt-4 pt-4 border-t border-neutral">
+                    {author_name && <span>{author_name}</span>}
+                    {author_name && published_at && <span>·</span>}
+                    {published_at && (
+                      <span>
+                        {new Date(published_at).toLocaleDateString("en-KE", {
+                          day: "numeric", month: "short", year: "numeric",
+                        })}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+
       </div>
     </section>
   );
 }
 
+
 // ── Testimonials ──────────────────────────────────────────────
+// ── Testimonials ──────────────────────────────────────────────
+// [PLACEHOLDER] — replace with real testimonials when available
 function Testimonials({ shouldReduce }) {
   const { ref, isInView } = useReveal();
-  const fadeUpVariants = useFadeUpVariants(shouldReduce);
-  const staggerVariants = useStaggerVariants(shouldReduce, 0.15);
+  const fadeUpVariants    = useFadeUpVariants(shouldReduce);
 
   return (
     <section className="section-padding bg-cream" ref={ref}>
-      <div className="container-wide px-6 md:px-12 lg:px-24">
-
-        <motion.div
-          className="text-center mb-12"
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
-            Voices of Impact
-          </p>
-          <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug">
-            What Our Community Says
-          </h2>
-        </motion.div>
-
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          variants={staggerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          {TESTIMONIALS.map(({ id, name, role, quote }) => (
-            <motion.div
-              key={id}
-              variants={fadeUpVariants}
-              className="bg-white rounded-lg p-6 border border-neutral shadow-sm flex flex-col"
-            >
-              <span className="font-heading text-5xl text-lavender leading-none mb-2">
-                "
-              </span>
-              <p className="font-body text-sm text-charcoal/80 leading-relaxed flex-1 mb-6">
-                {quote}
-              </p>
-              <div className="border-t border-neutral pt-4">
-                <p className="font-body text-sm font-medium text-charcoal">
-                  {name}
-                </p>
-                <p className="font-body text-xs text-sage uppercase tracking-wide mt-0.5">
-                  {role}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <motion.div
-          className="text-center mt-10"
-          variants={fadeUpVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          <Link to="/testimonials" className="btn-outline">
-            Read More Stories
-          </Link>
-        </motion.div>
-      </div>
+      <motion.div
+        className="container-narrow text-center px-6"
+        variants={fadeUpVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
+          Voices of Impact
+        </p>
+        <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-4">
+          What Our Community Says
+        </h2>
+        <p className="font-body text-base text-charcoal/60 leading-relaxed max-w-lg mx-auto mb-6">
+          Stories from patients, caregivers, and clinicians are coming soon.
+          If you have been supported by the Oncology Nutrition Space and would
+          like to share your experience, we would love to hear from you.
+        </p>
+        <Link to="/contact" className="btn-outline">
+          Share Your Story
+        </Link>
+      </motion.div>
     </section>
   );
 }
-
 // ── CTA Banner ────────────────────────────────────────────────
 function CTABanner({ shouldReduce }) {
   const { ref, isInView } = useReveal();

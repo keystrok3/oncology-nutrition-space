@@ -59,6 +59,24 @@ async function attachRelations(posts) {
   }))
 }
 
+// Upsert tags by name and return their IDs
+// Creates tags that don't exist yet
+async function upsertTags(tagNames) {
+  const ids = []
+  for (const name of tagNames) {
+    const slug = name.toLowerCase().replace(/\s+/g, '-')
+    const result = await pool.query(
+      `INSERT INTO tags (name, slug)
+       VALUES ($1, $2)
+       ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
+       RETURNING id`,
+      [name, slug]
+    )
+    ids.push(result.rows[0].id)
+  }
+  return ids
+}
+
 // ── GET /api/posts ────────────────────────────────────────────
 // Public — returns all published posts, newest first
 // Optional query param: ?category=slug
@@ -192,7 +210,8 @@ router.post('/', authenticate, upload.single('image'), async (req, res) => {
 
     // Attach tags if provided
     if (tags) {
-      const tagIds = JSON.parse(tags)
+      const tagNames = JSON.parse(tags)
+      const tagIds   = await upsertTags(tagNames)
       for (const tagId of tagIds) {
         await pool.query(
           'INSERT INTO posts_tags (post_id, tag_id) VALUES ($1, $2)',
@@ -275,7 +294,8 @@ router.put('/:id', authenticate, upload.single('image'), async (req, res) => {
     // Replace tags
     if (tags) {
       await pool.query('DELETE FROM posts_tags WHERE post_id = $1', [id])
-      const tagIds = JSON.parse(tags)
+      const tagNames = JSON.parse(tags)
+      const tagIds   = await upsertTags(tagNames)
       for (const tagId of tagIds) {
         await pool.query(
           'INSERT INTO posts_tags (post_id, tag_id) VALUES ($1, $2)',
