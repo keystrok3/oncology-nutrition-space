@@ -62,7 +62,7 @@ export default function Footer() {
 
           {/* WhatsApp link — update href with actual number or group link */}
           <a
-            href="https://wa.me/yournumberhere"
+            href="https://chat.whatsapp.com/JpnN1LDuHXk2OejkgmCUj5"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-body text-sm text-neutral hover:text-white transition-colors duration-200 mb-3"

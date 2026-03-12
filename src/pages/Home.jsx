@@ -659,7 +659,7 @@ function CTABanner({ shouldReduce }) {
         >
           {/* [PLACEHOLDER] — update href with actual WhatsApp link */}
           <a
-            href="https://wa.me/yournumberhere"
+            href="https://chat.whatsapp.com/JpnN1LDuHXk2OejkgmCUj5"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 bg-white text-sage font-body font-medium text-sm px-6 py-3 rounded-md hover:bg-neutral transition-colors duration-200"

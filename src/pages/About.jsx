@@ -91,29 +91,40 @@ function FounderStory() {
             <p className="font-body text-sm text-sage uppercase tracking-wide mb-6">
               Registered Nutritionist · Oncology Nutrition Specialist
             </p>
+
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
-              Nancy's journey into oncology nutrition began 
-              at her father's bedside. While caring for him through his
-              colorectal cancer diagnosis, she witnessed firsthand the profound
-              gap between cancer treatment and nutritional care, a gap that
-              compromised patients' strength, recovery, and quality
-              of life. Patients were majorly relying on the internet, 
-              survivors and locals on guidance about nutrition
+              Nancy’s journey into oncology nutrition began at her father’s bedside.
+              While caring for him through his colorectal cancer diagnosis, she saw
+              firsthand the gap between cancer treatment and nutritional care — a gap
+              that often left patients struggling to maintain their strength, recover,
+              and preserve their quality of life.
             </p>
+
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
-              Determined to change this, Nancy, a Registered Nutritionist with
-              a special interest in oncology, founded the Oncology Nutrition
-              Space in 2022 as an online support group. What began as a small
-              community of patients and caregivers seeking reliable nutrition
-              guidance has since grown into a movement of over 1,500 members
-              spanning all 47 counties in Kenya and reaching as far as Europe,
-              Uganda, Tanzania, Sierra Leone, and Burundi.
+              She also noticed something else: many patients and families were left to
+              search for answers on their own. People turned to the internet, to fellow
+              survivors, and to friends and relatives, hoping to find guidance about
+              nutrition during cancer treatment.
             </p>
+
+            <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
+              Determined to help change this, Nancy — a Registered Nutritionist with a
+              special interest in oncology — founded the Oncology Nutrition Space in
+              2022 as an online support group. What began as a small community of
+              patients and caregivers seeking reliable nutrition guidance gradually
+              grew beyond what she first imagined.
+            </p>
+
+            <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
+              Today the community includes more than 1,500 members across all 47
+              counties in Kenya, and also reaches people in Europe, Uganda, Tanzania,
+              Sierra Leone, and Burundi.
+            </p>
+
             <p className="font-body text-base text-charcoal/80 leading-relaxed">
-              In 2025, the organization was formally registered as a
-              Community-Based Organization. A milestone that reflects its
-              growing impact and long-term vision for oncology nutrition in
-              Africa.
+              In 2025, the initiative was formally registered as a Community-Based
+              Organization — a milestone that reflects its growing impact and its
+              long-term vision for oncology nutrition in Africa.
             </p>
           </motion.div>
         </motion.div>
@@ -356,7 +367,7 @@ function AboutCTA() {
         >
           {/* [PLACEHOLDER] — update href with actual WhatsApp link */}
           <a
-            href="https://wa.me/yournumberhere"
+            href="https://chat.whatsapp.com/JpnN1LDuHXk2OejkgmCUj5"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 bg-white text-sage font-body font-medium text-sm px-6 py-3 rounded-md hover:bg-neutral transition-colors duration-200"
