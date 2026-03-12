@@ -16,10 +16,15 @@ const PORT = process.env.PORT ?? 4000
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://oncology-nutrition-space.vercel.app/',
+    'https://oncology-nutrition-space.vercel.app',
   ],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }))
+
+// Explicitly handle preflight requests
+app.options('*', cors())
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
