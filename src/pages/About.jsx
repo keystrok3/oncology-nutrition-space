@@ -126,7 +126,7 @@ function MissionVision() {
   const { ref, isInView } = useReveal();
 
   return (
-    <section className="section-padding bg-neutral/40" ref={ref}>
+    <section className="section-padding bg-tint" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
@@ -275,7 +275,7 @@ function LongTermVision() {
   ];
 
   return (
-    <section className="section-padding bg-neutral/40" ref={ref}>
+    <section className="section-padding bg-tint" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
 
         {/* Header */}

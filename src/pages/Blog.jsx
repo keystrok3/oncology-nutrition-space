@@ -66,7 +66,7 @@ function PostRow({ post }) {
               {categories.map((cat) => (
                 <span
                   key={cat.id}
-                  className="font-body text-xs uppercase tracking-widest text-lavender"
+                  className="font-body text-xs uppercase tracking-widest text-blue"
                 >
                   {cat.title}
                 </span>

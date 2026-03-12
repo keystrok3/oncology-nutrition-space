@@ -7,18 +7,26 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Primary — logo dark green
         sage: {
-          DEFAULT: "#5F8D7E",
-          light: "#7AA898",
-          dark:  "#4A7163",
+          DEFAULT: "#4A7C3F",
+          light:   "#6AA358",
+          dark:    "#356030",
         },
-        lavender: {
-          DEFAULT: "#B8A8C9",
-          light:   "#CFC3DC",
+        // Accent — logo blue (replaces lavender)
+        blue: {
+          DEFAULT: "#2E7DB5",
+          light:   "#4A95C8",
+          dark:    "#1F5F8E",
         },
-        cream:   "#F8F9F7",
+        // Section tint — very light green derived from logo
+        tint:    "#F0F7EE",
+        // Pure white — primary background
+        cream:   "#FFFFFF",
+        // Neutral — borders, dividers
         neutral: "#EAEAEA",
-        charcoal:"#2E2E2E",
+        // Text — logo navy
+        charcoal:"#1B2D5B",
       },
       fontFamily: {
         heading: ["Playfair Display", "Georgia", "serif"],
@@ -29,11 +37,7 @@ export default {
         "22": "5.5rem",
         "30": "7.5rem",
       },
-      // Wider max-width for container-wide
-      maxWidth: {
-        "8xl": "88rem",
-      },
     },
   },
   plugins: [],
-};
+}

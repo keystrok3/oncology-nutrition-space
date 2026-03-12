@@ -161,7 +161,7 @@ function YearlyTheme() {
     <section className="section-padding bg-cream" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
         <motion.div
-          className="bg-white border border-lavender/40 rounded-2xl p-8 md:p-12 text-center shadow-sm"
+          className="bg-white border border-blue/40 rounded-2xl p-8 md:p-12 text-center shadow-sm"
           variants={stagger}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -169,7 +169,7 @@ function YearlyTheme() {
           {/* Year label */}
           <motion.span
             variants={fadeUp}
-            className="inline-block font-body text-xs uppercase tracking-widest text-lavender bg-lavender/10 px-4 py-1.5 rounded-full mb-6"
+            className="inline-block font-body text-xs uppercase tracking-widest text-blue bg-blue/10 px-4 py-1.5 rounded-full mb-6"
           >
             2025 Annual Theme
           </motion.span>
@@ -208,7 +208,7 @@ function ProgramsList() {
   const { ref, isInView } = useReveal();
 
   return (
-    <section className="section-padding bg-neutral/40" ref={ref}>
+    <section className="section-padding bg-tint" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
 
         {/* Header */}
@@ -257,7 +257,7 @@ function ProgramsList() {
                     </div>
 
                     {/* Audience */}
-                    <p className="font-body text-xs uppercase tracking-widest text-lavender mb-3">
+                    <p className="font-body text-xs uppercase tracking-widest text-blue mb-3">
                       For: {audience}
                     </p>
 

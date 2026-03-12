@@ -22,12 +22,10 @@
 /* ─── Reusable Component Classes ──────────────────────────── */
 @layer components {
 
-  /* Section padding — used for page sections, NOT nav/footer internals */
   .section-padding {
     @apply px-6 py-12 md:px-16 lg:px-24 lg:py-20;
   }
 
-  /* Wider content container */
   .container-narrow {
     @apply max-w-4xl mx-auto;
   }
@@ -36,7 +34,7 @@
     @apply max-w-[88rem] mx-auto w-full;
   }
 
-  /* Primary CTA — smaller, more refined */
+  /* Primary CTA — logo green */
   .btn-primary {
     @apply inline-block bg-sage text-white font-body font-medium text-sm
            px-4 py-2 rounded-md

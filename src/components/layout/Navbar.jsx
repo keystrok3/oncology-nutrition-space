@@ -26,14 +26,13 @@ export default function Navbar() {
       <nav className="container-wide px-6 md:px-12 lg:px-24 py-3 flex items-center justify-between">
 
         {/* ── Logo ───────────────────────────────────────────── */}
-        <Link
-          to="/"
-          className="font-heading text-lg font-semibold text-sage leading-tight shrink-0"
-        >
-          Oncology Nutrition{" "}
-          <span className="block text-xs font-body font-normal text-charcoal tracking-wide uppercase">
-            Nourishing Cancer Care
-          </span>
+        {/* ── Logo ───────────────────────────────────────────── */}
+        <Link to="/" className="shrink-0">
+          <img
+            src="/images/logo2.svg"
+            alt="Oncology Nutrition Space"
+            className="h-16 w-auto"
+          />
         </Link>
 
         {/* ── Desktop Nav Links ──────────────────────────────── */}

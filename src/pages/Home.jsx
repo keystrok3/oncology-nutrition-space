@@ -183,7 +183,7 @@ function Hero({ shouldReduce }) {
         {/* Eyebrow */}
         <motion.p
           variants={fadeUpVariants}
-          className="font-body text-sm uppercase tracking-widest text-lavender mb-4"
+          className="font-body text-sm uppercase tracking-widest text-blue mb-4"
         >
           Oncology Nutrition Space
         </motion.p>
@@ -324,7 +324,7 @@ function TheProblem({ shouldReduce }) {
   const staggerVariants = useStaggerVariants(shouldReduce);
 
   return (
-    <section className="section-padding bg-neutral/40" ref={ref}>
+    <section className="section-padding bg-tint" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
@@ -474,7 +474,7 @@ function BlogPreview({ shouldReduce }) {
   }, []);
 
   return (
-    <section className="section-padding bg-neutral/40" ref={ref}>
+    <section className="section-padding bg-tint" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
 
         {/* Header */}
@@ -548,7 +548,7 @@ function BlogPreview({ shouldReduce }) {
                 <div className="p-6 flex flex-col flex-1">
                   {/* Category */}
                   {categories?.length > 0 && (
-                    <span className="font-body text-xs uppercase tracking-widest text-lavender mb-2">
+                    <span className="font-body text-xs uppercase tracking-widest text-blue mb-2">
                       {categories[0].title}
                     </span>
                   )}
