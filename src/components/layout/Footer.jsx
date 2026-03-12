@@ -23,7 +23,7 @@ export default function Footer() {
         {/* Column 1 — About the Initiative */}
         <div className="flex flex-col items-center text-center">
           <p className="font-heading text-lg font-semibold text-white leading-tight mb-3">
-            Oncology Nutrition
+            Oncology Nutrition Space
             <span className="block text-xs font-body font-normal text-neutral tracking-wide uppercase mt-0.5">
               Nourishing Cancer Care
             </span>
