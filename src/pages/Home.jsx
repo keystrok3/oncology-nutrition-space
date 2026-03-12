@@ -215,6 +215,7 @@ function Hero({ shouldReduce }) {
           <Link to="/contact" className="btn-primary px-8 py-3 text-base">
             Get Support
           </Link>
+          
           <Link
             to="/about"
             className="btn-outline px-8 py-3 text-base border-white text-white hover:bg-white hover:text-charcoal"
