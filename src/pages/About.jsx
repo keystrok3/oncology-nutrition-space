@@ -95,9 +95,10 @@ function FounderStory() {
               Nancy's journey into oncology nutrition began 
               at her father's bedside. While caring for him through his
               colorectal cancer diagnosis, she witnessed firsthand the profound
-              gap between cancer treatment and nutritional care - a gap that
+              gap between cancer treatment and nutritional care, a gap that
               compromised patients' strength, recovery, and quality
-              of life.
+              of life. Patients were majorly relying on the internet, 
+              survivors and locals on guidance about nutrition
             </p>
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
               Determined to change this, Nancy, a Registered Nutritionist with
