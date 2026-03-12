@@ -14,10 +14,9 @@ const PORT = process.env.PORT ?? 4000
 
 // ─── Middleware ───────────────────────────────────────────────
 app.use(cors({
-  // [PLACEHOLDER] — update with your Vercel frontend URL before deploying
   origin: [
+    'http://localhost:5173',
     'https://oncology-nutrition-space.vercel.app/',
-    'http://localhost:5173'
   ],
   credentials: true,
 }))
