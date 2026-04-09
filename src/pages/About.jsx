@@ -1,27 +1,23 @@
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useRef } from "react";
-import { useInView } from "framer-motion";
+import { Link } from "react-router-dom";
+import { motion, useInView } from "framer-motion";
 
-// ─── Animation Helpers ────────────────────────────────────────
-// Mirrors the pattern used in Home.jsx
 function useReveal() {
-  const ref     = useRef(null);
+  const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px 0px -80px 0px" });
   return { ref, isInView };
 }
 
 const fadeUp = {
-  hidden:  { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 const stagger = {
-  hidden:  {},
+  hidden: {},
   visible: { transition: { staggerChildren: 0.12 } },
 };
 
-// ─── Section: Hero ────────────────────────────────────────────
 function AboutHero() {
   return (
     <section className="section-padding bg-sage">
@@ -57,7 +53,6 @@ function AboutHero() {
   );
 }
 
-// ─── Section: Founder Story ───────────────────────────────────
 function FounderStory() {
   const { ref, isInView } = useReveal();
 
@@ -70,17 +65,14 @@ function FounderStory() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {/* Founder photo */}
           <motion.div variants={fadeUp} className="flex justify-center">
             <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden bg-sage/10 border border-neutral flex items-center justify-center">
-              {/* [PLACEHOLDER] — replace src with actual founder photo */}
               <p className="font-body text-xs text-sage/40 uppercase tracking-widest text-center px-6">
                 Founder photo coming soon
               </p>
             </div>
           </motion.div>
 
-          {/* Story text */}
           <motion.div variants={fadeUp}>
             <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
               The Founder
@@ -89,39 +81,16 @@ function FounderStory() {
               Nancy Muyoka
             </h2>
             <p className="font-body text-sm text-sage uppercase tracking-wide mb-6">
-              Registered Nutritionist · Oncology Nutrition Specialist
+              Founder
             </p>
 
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
-              Nancy’s journey into oncology nutrition began at her father’s.
-              while caring for him through his colorectal cancer diagnosis.
-            </p>
-
-            <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
-              She also noticed something else: many patients and families were left to
-              search for answers on their own. People turned to the internet, to fellow
-              survivors, and to friends and relatives, hoping to find guidance about
-              nutrition during cancer treatment.
-            </p>
-
-            <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
-              Determined to help change this, Nancy — a Registered Nutritionist with a
-              special interest in oncology — founded the Oncology Nutrition Space in
-              2022 while taking care of her Dad who was fighting colorectal cancer.
-              What began as a small community of patients and caregivers seeking
-              reliable nutrition guidance gradually grew beyond what she first imagined.
-            </p>
-
-            <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
-              Today the community includes more than 1,500 members across all 47
-              counties in Kenya, and also reaches people in Europe, Uganda, Tanzania,
-              Sierra Leone, and Burundi.
+              Nancy Muyoka is the founder of Oncology Nutrition Space.
             </p>
 
             <p className="font-body text-base text-charcoal/80 leading-relaxed">
-              In 2025, the initiative was formally registered as a Community-Based
-              Organization — a milestone that reflects its growing impact and its
-              long-term vision for oncology nutrition in Africa.
+              She founded it in 2022 while taking care of her Dad, who was
+              fighting colorectal cancer.
             </p>
           </motion.div>
         </motion.div>
@@ -130,7 +99,6 @@ function FounderStory() {
   );
 }
 
-// ─── Section: Mission & Vision ────────────────────────────────
 function MissionVision() {
   const { ref, isInView } = useReveal();
 
@@ -143,12 +111,11 @@ function MissionVision() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {/* Mission */}
           <motion.div
             variants={fadeUp}
             className="bg-white rounded-lg p-8 border border-neutral shadow-sm"
           >
-            <span className="text-3xl mb-4 block">🎯</span>
+            <span className="text-3xl mb-4 block">Mission</span>
             <h3 className="font-heading text-2xl text-charcoal mb-4">
               Our Mission
             </h3>
@@ -159,16 +126,14 @@ function MissionVision() {
             </p>
           </motion.div>
 
-          {/* Vision */}
           <motion.div
             variants={fadeUp}
             className="bg-white rounded-lg p-8 border border-neutral shadow-sm"
           >
-            <span className="text-3xl mb-4 block">🌍</span>
+            <span className="text-3xl mb-4 block">Vision</span>
             <h3 className="font-heading text-2xl text-charcoal mb-4">
               Our Vision
             </h3>
-            {/* [PLACEHOLDER] — update with client's formal vision statement */}
             <p className="font-body text-base text-charcoal/80 leading-relaxed">
               A future where oncology nutrition is an integral part of cancer
               care across Africa. Where no patient faces treatment without
@@ -182,7 +147,6 @@ function MissionVision() {
   );
 }
 
-// ─── Section: Evidence-Based Philosophy ──────────────────────
 function Philosophy() {
   const { ref, isInView } = useReveal();
 
@@ -212,8 +176,6 @@ function Philosophy() {
   return (
     <section className="section-padding bg-cream" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
-
-        {/* Header */}
         <motion.div
           className="text-center mb-12"
           variants={fadeUp}
@@ -228,7 +190,6 @@ function Philosophy() {
           </h2>
         </motion.div>
 
-        {/* Principles grid */}
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 gap-6"
           variants={stagger}
@@ -255,7 +216,6 @@ function Philosophy() {
   );
 }
 
-// ─── Section: Long-term Vision ────────────────────────────────
 function LongTermVision() {
   const { ref, isInView } = useReveal();
 
@@ -278,7 +238,6 @@ function LongTermVision() {
     {
       phase: "Future",
       title: "Pan-African Reach",
-      // [PLACEHOLDER] — update with client's long-term vision details
       description: "Building toward a future where oncology nutrition is embedded in cancer care systems across Africa.",
     },
   ];
@@ -286,8 +245,6 @@ function LongTermVision() {
   return (
     <section className="section-padding bg-tint" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
-
-        {/* Header */}
         <motion.div
           className="text-center mb-12"
           variants={fadeUp}
@@ -302,7 +259,6 @@ function LongTermVision() {
           </h2>
         </motion.div>
 
-        {/* Timeline */}
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
           variants={stagger}
@@ -315,7 +271,6 @@ function LongTermVision() {
               variants={fadeUp}
               className="bg-white rounded-lg p-6 border border-neutral shadow-sm text-center"
             >
-              {/* Phase label */}
               <span className="inline-block font-body text-xs uppercase tracking-widest text-white bg-sage px-3 py-1 rounded-full mb-4">
                 {phase}
               </span>
@@ -333,7 +288,6 @@ function LongTermVision() {
   );
 }
 
-// ─── Section: CTA ─────────────────────────────────────────────
 function AboutCTA() {
   const { ref, isInView } = useReveal();
 
@@ -355,14 +309,13 @@ function AboutCTA() {
           variants={fadeUp}
           className="font-body text-base text-white/85 leading-relaxed max-w-xl mx-auto mb-10"
         >
-          Whether you are a patient, caregiver, clinician, or partner, 
+          Whether you are a patient, caregiver, clinician, or partner,
           there is a place for you in the Oncology Nutrition Space community.
         </motion.p>
         <motion.div
           variants={fadeUp}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          {/* [PLACEHOLDER] — update href with actual WhatsApp link */}
           <a
             href="https://chat.whatsapp.com/JpnN1LDuHXk2OejkgmCUj5"
             target="_blank"
@@ -383,7 +336,6 @@ function AboutCTA() {
   );
 }
 
-// ─── Page Assembly ────────────────────────────────────────────
 export default function About() {
   return (
     <>
