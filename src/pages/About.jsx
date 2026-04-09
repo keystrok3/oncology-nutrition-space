@@ -48,8 +48,8 @@ function AboutHero() {
           variants={fadeUp}
           className="font-body text-base text-white/85 leading-relaxed max-w-2xl mx-auto"
         >
-          We are a registered community-based organization founded in Eldoret,
-          Kenya, with a mission to transform cancer care through evidence-based
+          We are a registered community-based organization founded in Kenya,
+          with a mission to transform cancer care through evidence-based
           nutrition and compassionate community support.
         </motion.p>
       </motion.div>
@@ -86,18 +86,15 @@ function FounderStory() {
               The Founder
             </p>
             <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-2">
-              Nancy Muyoka Makhakha
+              Nancy Muyoka
             </h2>
             <p className="font-body text-sm text-sage uppercase tracking-wide mb-6">
               Registered Nutritionist · Oncology Nutrition Specialist
             </p>
 
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
-              Nancy’s journey into oncology nutrition began at her father’s bedside.
-              While caring for him through his colorectal cancer diagnosis, she saw
-              firsthand the gap between cancer treatment and nutritional care — a gap
-              that often left patients struggling to maintain their strength, recover,
-              and preserve their quality of life.
+              Nancy’s journey into oncology nutrition began at her father’s.
+              while caring for him through his colorectal cancer diagnosis.
             </p>
 
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
@@ -110,9 +107,9 @@ function FounderStory() {
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
               Determined to help change this, Nancy — a Registered Nutritionist with a
               special interest in oncology — founded the Oncology Nutrition Space in
-              2022 as an online support group. What began as a small community of
-              patients and caregivers seeking reliable nutrition guidance gradually
-              grew beyond what she first imagined.
+              2022 while taking care of her Dad who was fighting colorectal cancer.
+              What began as a small community of patients and caregivers seeking
+              reliable nutrition guidance gradually grew beyond what she first imagined.
             </p>
 
             <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">

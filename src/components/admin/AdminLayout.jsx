@@ -5,7 +5,6 @@ import { useAuth } from "../../context/AuthContext";
 const NAV_ITEMS = [
   { label: "Dashboard",  path: "/admin",            exact: true },
   { label: "Posts",      path: "/admin/posts"                   },
-  { label: "Categories", path: "/admin/categories"              },
   { label: "Users",      path: "/admin/users",      adminOnly: true },
 ];
 
