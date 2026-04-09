@@ -5,7 +5,7 @@ import { upload } from '../middleware/upload.js'
 
 const router = express.Router()
 
-// ── GET /api/users ────────────────────────────────────────────
+// GET /api/users
 // Admin only — list all users
 router.get('/', authenticate, authorize('admin'), async (req, res) => {
   try {
@@ -19,12 +19,11 @@ router.get('/', authenticate, authorize('admin'), async (req, res) => {
   }
 })
 
-// ── PUT /api/users/:id ────────────────────────────────────────
+// PUT /api/users/:id
 // Update own profile — or any user if admin
 router.put('/:id', authenticate, upload.single('image'), async (req, res) => {
   const { id } = req.params
 
-  // Non-admins can only update their own profile
   if (req.user.role !== 'admin' && req.user.id !== id) {
     return res.status(403).json({ error: 'Insufficient permissions' })
   }
@@ -43,15 +42,15 @@ router.put('/:id', authenticate, upload.single('image'), async (req, res) => {
 
     const result = await pool.query(
       `UPDATE users SET
-        name      = $1,
-        bio       = $2,
-        photo_url = $3
+         name      = $1,
+         bio       = $2,
+         photo_url = $3
        WHERE id = $4
        RETURNING id, email, name, role, bio, photo_url`,
       [
-        name      ?? user.name,
-        bio       ?? user.bio,
-        photoUrl  ?? user.photo_url,
+        name ?? user.name,
+        bio ?? user.bio,
+        photoUrl ?? user.photo_url,
         id,
       ]
     )
@@ -63,10 +62,29 @@ router.put('/:id', authenticate, upload.single('image'), async (req, res) => {
   }
 })
 
-// ── DELETE /api/users/:id ─────────────────────────────────────
+// DELETE /api/users/:id
 // Admin only — delete a user
 router.delete('/:id', authenticate, authorize('admin'), async (req, res) => {
   try {
+    const existing = await pool.query(
+      'SELECT id, role FROM users WHERE id = $1',
+      [req.params.id]
+    )
+
+    if (!existing.rows.length) {
+      return res.status(404).json({ error: 'User not found' })
+    }
+
+    if (existing.rows[0].role === 'admin') {
+      const adminCount = await pool.query(
+        "SELECT COUNT(*)::int AS total_admins FROM users WHERE role = 'admin'"
+      )
+
+      if (adminCount.rows[0].total_admins === 1) {
+        return res.status(400).json({ error: 'You must keep at least one admin account' })
+      }
+    }
+
     await pool.query('DELETE FROM users WHERE id = $1', [req.params.id])
     res.json({ message: 'User deleted successfully' })
   } catch (err) {
