@@ -88,7 +88,7 @@ export default function Gallery() {
 
   return (
     <>
-      <section className="border-b border-neutral/70 bg-tint px-6 py-8 md:py-10">
+      <section className="border-b border-neutral/70 bg-cream px-6 py-8 md:py-10">
         <motion.div
           className="container-narrow px-6 text-center"
           initial="hidden"

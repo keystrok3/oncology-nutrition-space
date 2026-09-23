@@ -7,7 +7,7 @@ const WHATSAPP = "https://chat.whatsapp.com/JpnN1LDuHXk2OejkgmCUj5";
 export default function Contact() {
   return (
     <>
-      <section className="border-b border-neutral/70 bg-tint px-6 py-8 md:py-10">
+      <section className="border-b border-neutral/70 bg-cream px-6 py-8 md:py-10">
         <motion.div
           className="container-narrow px-6 text-center"
           initial={{ opacity: 0, y: 18 }}

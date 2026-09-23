@@ -20,7 +20,7 @@ const stagger = {
 
 function AboutHero() {
   return (
-    <section className="border-b border-neutral/70 bg-tint px-6 py-8 md:py-10">
+    <section className="border-b border-neutral/70 bg-cream px-6 py-8 md:py-10">
       <motion.div
         className="container-narrow text-center px-6"
         variants={stagger}

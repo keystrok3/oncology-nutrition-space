@@ -70,13 +70,6 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* ── Desktop CTA ────────────────────────────────────── */}
-        <div className="hidden lg:block shrink-0">
-          <Link to="/contact" className="btn-primary">
-            Get Support
-          </Link>
-        </div>
-
         {/* ── Mobile Hamburger ───────────────────────────────── */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
