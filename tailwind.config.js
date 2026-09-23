@@ -9,24 +9,24 @@ export default {
       colors: {
         // Primary — logo dark green
         sage: {
-          DEFAULT: "#4A7C3F",
-          light:   "#6AA358",
-          dark:    "#356030",
+          DEFAULT: "#557A4D",
+          light:   "#769A6A",
+          dark:    "#3E6138",
         },
         // Accent — logo blue (replaces lavender)
         blue: {
-          DEFAULT: "#2E7DB5",
-          light:   "#4A95C8",
-          dark:    "#1F5F8E",
+          DEFAULT: "#477A99",
+          light:   "#6995AD",
+          dark:    "#365F78",
         },
         // Section tint — very light green derived from logo
-        tint:    "#F0F7EE",
+        tint:    "#F3F6F1",
         // Pure white — primary background
-        cream:   "#FFFFFF",
+        cream:   "#FBFAF7",
         // Neutral — borders, dividers
         neutral: "#EAEAEA",
         // Text — logo navy
-        charcoal:"#1B2D5B",
+        charcoal:"#273548",
       },
       fontFamily: {
         heading: ["Playfair Display", "Georgia", "serif"],

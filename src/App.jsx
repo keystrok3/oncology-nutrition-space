@@ -12,6 +12,7 @@ import PostForm from "./pages/admin/PostForm";
 import Users from "./pages/admin/Users";
 import About from "./pages/About";
 import Programs from "./pages/Programs";
+import Gallery from "./pages/Gallery";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="blog/:slug" element={<BlogPost />} />
         <Route path="about" element={<About />} />
         <Route path="programs" element={<Programs />} />
+        <Route path="gallery" element={<Gallery />} />
 
         <Route
           path="*"

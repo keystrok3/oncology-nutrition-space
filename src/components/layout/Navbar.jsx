@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, Link, useLocation } from "react-router-dom";
 
 const NAV_LINKS = [
   { label: "Home",                path: "/" },
   { label: "About",               path: "/about" },
   { label: "Programs & Services", path: "/programs" },
+  { label: "Gallery",             path: "/gallery" },
   { label: "Blog",                path: "/blog" },
   { label: "Testimonials",        path: "/testimonials" },
   { label: "FAQs",                path: "/faqs" },
@@ -13,14 +14,36 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+
+  useEffect(() => {
+    if (!isHome) {
+      setScrolled(false);
+      return undefined;
+    }
+
+    const updateScrollState = () => setScrolled(window.scrollY > 80);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, [isHome]);
 
   const linkClass = ({ isActive }) =>
     isActive
-      ? "text-sage font-medium border-b-2 border-sage pb-0.5 whitespace-nowrap"
-      : "text-charcoal hover:text-sage transition-colors duration-200 whitespace-nowrap";
+      ? `${isHome ? "text-white border-white" : "text-sage border-sage"} font-medium border-b-2 pb-0.5 whitespace-nowrap`
+      : `${isHome ? "text-white/90 hover:text-white" : "text-charcoal hover:text-sage"} transition-colors duration-200 whitespace-nowrap`;
 
   return (
-    <header className="bg-cream border-b border-neutral sticky top-0 z-50">
+    <header
+      className={`${isHome
+        ? scrolled
+          ? "home-navbar home-navbar-scrolled fixed top-0 left-0 right-0"
+          : "home-navbar absolute top-0 left-0 right-0"
+        : "bg-cream border-b border-neutral sticky top-0"} z-50`}
+    >
 
       {/* Reduced py-3 from py-4 to bring navbar height down */}
       <nav className="container-wide px-6 md:px-12 lg:px-24 py-3 flex items-center justify-between">
@@ -59,17 +82,17 @@ export default function Navbar() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation menu"
           aria-expanded={menuOpen}
-          className="lg:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8"
+          className={`lg:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8 ${isHome ? "text-white" : ""}`}
         >
-          <span className={`block h-0.5 w-6 bg-charcoal transition-transform duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-          <span className={`block h-0.5 w-6 bg-charcoal transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`block h-0.5 w-6 bg-charcoal transition-transform duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+          <span className={`block h-0.5 w-6 ${isHome ? "bg-white" : "bg-charcoal"} transition-transform duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+          <span className={`block h-0.5 w-6 ${isHome ? "bg-white" : "bg-charcoal"} transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`block h-0.5 w-6 ${isHome ? "bg-white" : "bg-charcoal"} transition-transform duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
         </button>
       </nav>
 
       {/* ── Mobile Dropdown Menu ─────────────────────────────── */}
       {menuOpen && (
-        <div className="lg:hidden bg-cream border-t border-neutral px-6 pb-6">
+        <div className={`lg:hidden ${isHome ? "bg-black/80 border-t border-white/10" : "bg-cream border-t border-neutral"} px-6 pb-6`}>
           <ul className="flex flex-col gap-4 pt-4">
             {NAV_LINKS.map(({ label, path }) => (
               <li key={path}>

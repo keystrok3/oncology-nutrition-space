@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { apiFetch } from "../lib/api";
+import { FEATURED_GALLERY_ITEMS } from "../data/gallery";
 
 // ─── Animation Helpers ────────────────────────────────────────
 
@@ -91,6 +92,32 @@ function AnimatedCounter({ value, isInView, shouldReduce }) {
 
 // ─── Data ─────────────────────────────────────────────────────
 
+const HERO_SLIDES = [
+  {
+    image: "/images/slides/slide1.jpeg",
+    alt: "Oncology Nutrition Space at the National Cancer Survivors Walk 2026",
+    label: "National Cancer Survivors Walk 2026",
+  },
+  {
+    image: "/images/slides/slide2.jpeg",
+    alt: "Nutrition awareness day in Nakuru County",
+    label: "Nakuru County Nutrition Awareness Day",
+  },
+  {
+    image: "/images/slides/slide3.jpeg",
+    alt: "Oncology Nutrition Space community outreach",
+    label: "Community Outreach & Nutrition Awareness",
+  },
+  {
+    image: "/images/slides/slide4.jpeg",
+    alt: "Nutrition awareness meetup in Nairobi",
+    label: "Nairobi Nutrition Awareness Day",
+  },
+];
+
+const HERO_HEADLINE = "Nourishing the Fight Against Cancer";
+const HERO_WORDS = HERO_HEADLINE.split(" ");
+
 const STATS = [
   { value: "2000", label: "Community Members" },
   { value: "47",     label: "Counties Reached"  },
@@ -167,17 +194,40 @@ const TESTIMONIALS = [
 // ── Hero ──────────────────────────────────────────────────────
 // Hero animates on mount — no scroll trigger needed.
 function Hero({ shouldReduce }) {
-  const fadeUpVariants = useFadeUpVariants(shouldReduce);
   const staggerVariants = useStaggerVariants(shouldReduce, 0.18);
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    if (shouldReduce) return undefined;
+
+    const timer = setInterval(() => {
+      setActiveSlide((current) => (current + 1) % HERO_SLIDES.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [shouldReduce]);
+
+  const slide = HERO_SLIDES[activeSlide];
 
   return (
     <section
-      className="relative min-h-[90vh] flex items-center justify-center bg-cover bg-center"
-      // [PLACEHOLDER] — replace with actual hero image path once provided
-      style={{ backgroundImage: "url('/images/hero.png')" }}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-charcoal"
+      aria-label="Community outreach highlights"
     >
+      <AnimatePresence initial={false}>
+        <motion.img
+          key={slide.image}
+          src={slide.image}
+          alt={slide.alt}
+          className="absolute inset-0 h-full w-full object-cover"
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "-100%" }}
+          transition={{ duration: shouldReduce ? 0 : 2, ease: "easeInOut" }}
+        />
+      </AnimatePresence>
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-charcoal/65" />
+      <div className="absolute inset-0 bg-black/25" />
 
       {/* Stagger container — children animate in sequence */}
       <motion.div
@@ -186,50 +236,69 @@ function Hero({ shouldReduce }) {
         initial="hidden"
         animate="visible"
       >
-        {/* Eyebrow */}
-        <motion.p
-          variants={fadeUpVariants}
-          className="font-body text-sm uppercase tracking-widest text-blue mb-4"
-        >
-          Oncology Nutrition Space
-        </motion.p>
-
         {/* Headline */}
         <motion.h1
-          variants={fadeUpVariants}
           className="font-heading text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6"
         >
-          Nourishing the Fight <br className="hidden md:block" />
-          Against Cancer
+          {(() => {
+            let characterIndex = 0;
+            return HERO_WORDS.map((word) => (
+              <span key={word} className="mr-2 inline-block whitespace-nowrap last:mr-0">
+                {Array.from(word).map((character) => {
+                  const delay = characterIndex++ * 0.08;
+                  return (
+                    <motion.span
+                      key={`${word}-${character}-${characterIndex}`}
+                      initial={{ opacity: 0, y: shouldReduce ? 0 : 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: shouldReduce ? 0 : 0.25,
+                        delay: shouldReduce ? 0 : delay,
+                        ease: "easeOut",
+                      }}
+                      className="inline-block"
+                    >
+                      {character}
+                    </motion.span>
+                  );
+                })}
+              </span>
+            ));
+          })()}
         </motion.h1>
 
-        {/* Subheadline */}
-        <motion.p
-          variants={fadeUpVariants}
-          className="font-body text-lg text-neutral/90 max-w-2xl mx-auto mb-10 leading-relaxed"
-        >
-          Evidence-based oncology nutrition support for patients, caregivers,
-          and clinicians in Kenya and beyond. Because what you eat during cancer
-          care matters deeply.
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          variants={fadeUpVariants}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
-          <Link to="/contact" className="btn-primary px-8 py-3 text-base">
-            Get Support
-          </Link>
-          
-          <Link
-            to="/about"
-            className="btn-outline px-8 py-3 text-base border-white text-white hover:bg-white hover:text-charcoal"
-          >
-            Learn More
-          </Link>
-        </motion.div>
       </motion.div>
+
+      <div className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3">
+        <button
+          type="button"
+          aria-label="Previous slide"
+          onClick={() => setActiveSlide((current) => (current - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
+          className="hidden px-2 py-1 text-lg text-white/60 transition-colors hover:text-white sm:block"
+        >
+          ←
+        </button>
+        {HERO_SLIDES.map((item, index) => (
+          <button
+            key={item.image}
+            type="button"
+            aria-label={`Show slide ${index + 1}: ${item.label}`}
+            aria-current={index === activeSlide ? "true" : undefined}
+            onClick={() => setActiveSlide(index)}
+            className={`h-2 w-2 rounded-full border border-white/70 transition-colors ${
+              index === activeSlide ? "bg-white" : "bg-white/20"
+            }`}
+          />
+        ))}
+        <button
+          type="button"
+          aria-label="Next slide"
+          onClick={() => setActiveSlide((current) => (current + 1) % HERO_SLIDES.length)}
+          className="hidden px-2 py-1 text-lg text-white/60 transition-colors hover:text-white sm:block"
+        >
+          →
+        </button>
+      </div>
     </section>
   );
 }
@@ -462,15 +531,9 @@ function WhatWeDo({ shouldReduce }) {
 }
 
 // ── Outreach & Partnerships ─────────────────────────────────
-// Outreach images can be added later at the paths listed in the design notes.
 function OutreachHighlights({ shouldReduce }) {
   const { ref, isInView } = useReveal();
   const fadeUpVariants = useFadeUpVariants(shouldReduce);
-  const highlights = [
-    { location: "Nakuru", icon: "📍" },
-    { location: "Kakamega", icon: "📍" },
-    { location: "Nairobi", icon: "📍" },
-  ];
 
   return (
     <section className="section-padding bg-tint" ref={ref}>
@@ -488,36 +551,73 @@ function OutreachHighlights({ shouldReduce }) {
             Taking Support Into Communities
           </h2>
           <p className="font-body text-base text-charcoal/75 leading-relaxed max-w-2xl mx-auto">
-            Our outreach work has taken us to Nakuru, Kakamega, and Nairobi. We
-            also actively participate in and partner with government initiatives,
+            Our outreach work includes Nakuru, Nairobi, and Vihiga. We also
+            actively participate in and partner with government initiatives,
             including the National Cancer Control (NCI) project this year.
           </p>
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-6"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
           variants={useStaggerVariants(shouldReduce, 0.12)}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {highlights.map(({ location, icon }) => (
+          {FEATURED_GALLERY_ITEMS.map(({ image, alt, title, description }) => (
             <motion.div
-              key={location}
+              key={image}
               variants={fadeUpVariants}
-              className="min-h-56 rounded-lg border border-neutral bg-white overflow-hidden shadow-sm"
+              className="rounded-lg border border-neutral bg-white overflow-hidden shadow-sm"
             >
-              <div className="h-40 bg-sage/10 flex items-center justify-center">
-                <span className="text-4xl" aria-hidden="true">{icon}</span>
-                <span className="sr-only">{location} outreach photo</span>
-              </div>
+              <img src={image} alt={alt} loading="lazy" className="h-48 w-full object-cover" />
               <div className="p-4">
-                <h3 className="font-heading text-lg text-charcoal">{location}</h3>
-                <p className="font-body text-sm text-charcoal/60">
-                  Outreach photo coming soon
-                </p>
+                <h3 className="font-heading text-base text-charcoal">{title}</h3>
+                <p className="font-body text-sm text-charcoal/60">{description}</p>
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        <div className="mt-10 text-center">
+          <Link to="/gallery" className="btn-outline">
+            View the Full Gallery →
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PartnerStrip({ shouldReduce }) {
+  const { ref, isInView } = useReveal();
+  const partners = ["KENCO", "NCI-Kenya", "KNH", "Nakuru Hospice", "National Cancer Control"];
+
+  return (
+    <section className="border-y border-neutral/70 bg-cream py-10" ref={ref}>
+      <div className="container-wide px-6 md:px-12 lg:px-24">
+        <motion.div
+          className="flex flex-col items-center gap-6 md:flex-row md:justify-between"
+          variants={useStaggerVariants(shouldReduce, 0.08)}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          <motion.p
+            variants={useFadeUpVariants(shouldReduce)}
+            className="font-body text-xs uppercase tracking-[0.18em] text-charcoal/55 text-center md:text-left"
+          >
+            Working alongside
+          </motion.p>
+          <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
+            {partners.map((partner) => (
+              <motion.span
+                key={partner}
+                variants={useFadeUpVariants(shouldReduce)}
+                className="font-heading text-base text-charcoal/75"
+              >
+                {partner}
+              </motion.span>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
@@ -771,6 +871,7 @@ export default function Home() {
       <TheProblem shouldReduce={shouldReduce} />
       <WhatWeDo shouldReduce={shouldReduce} />
       <OutreachHighlights shouldReduce={shouldReduce} />
+      <PartnerStrip shouldReduce={shouldReduce} />
       <BlogPreview shouldReduce={shouldReduce} />
       <Testimonials shouldReduce={shouldReduce} />
       <CTABanner shouldReduce={shouldReduce} />

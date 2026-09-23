@@ -12,10 +12,12 @@
 
   body {
     @apply bg-cream text-charcoal font-body antialiased;
+    line-height: 1.65;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+    letter-spacing: -0.015em;
   }
 }
 
@@ -37,7 +39,7 @@
   /* Primary CTA — logo green */
   .btn-primary {
     @apply inline-block bg-sage text-white font-body font-medium text-sm
-           px-4 py-2 rounded-md
+           px-4 py-2 rounded-md shadow-sm
            hover:bg-sage-dark transition-colors duration-200;
   }
 
@@ -46,5 +48,32 @@
     @apply inline-block border border-sage text-sage font-body font-medium text-sm
            px-4 py-2 rounded-md
            hover:bg-sage hover:text-white transition-colors duration-200;
+  }
+
+  .home-navbar {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.28), transparent);
+    border-bottom: 1px solid transparent;
+    opacity: 0;
+    transition: opacity 250ms ease, background 250ms ease;
+  }
+
+  .home-navbar:hover,
+  .home-navbar:focus-within {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.42);
+  }
+
+  .home-navbar-scrolled {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.78);
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Hover is not a reliable interaction on phones, so keep the home navigation discoverable there. */
+  @media (max-width: 1023px) {
+    .home-navbar {
+      opacity: 1;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.42), transparent);
+    }
   }
 }
