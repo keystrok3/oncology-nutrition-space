@@ -20,7 +20,7 @@ const stagger = {
 
 function AboutHero() {
   return (
-    <section className="section-padding bg-sage">
+    <section className="border-b border-neutral/70 bg-tint px-6 py-8 md:py-10">
       <motion.div
         className="container-narrow text-center px-6"
         variants={stagger}
@@ -29,20 +29,20 @@ function AboutHero() {
       >
         <motion.p
           variants={fadeUp}
-          className="font-body text-sm uppercase tracking-widest text-white/70 mb-3"
+          className="font-body text-xs uppercase tracking-widest text-sage mb-2"
         >
           About Us
         </motion.p>
         <motion.h1
           variants={fadeUp}
-          className="font-heading text-4xl md:text-5xl text-white leading-snug mb-6"
+          className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-3"
         >
           Nourishing Cancer Care <br className="hidden md:block" />
           From the Inside Out
         </motion.h1>
         <motion.p
           variants={fadeUp}
-          className="font-body text-base text-white/85 leading-relaxed max-w-2xl mx-auto"
+          className="font-body text-sm md:text-base text-charcoal/70 leading-relaxed max-w-2xl mx-auto"
         >
           We are a registered community-based organization founded in Kenya in
           2022/2023, and a registered member of KENCO (Kenya Network of Cancer

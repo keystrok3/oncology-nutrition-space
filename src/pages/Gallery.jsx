@@ -88,20 +88,20 @@ export default function Gallery() {
 
   return (
     <>
-      <section className="section-padding bg-sage">
+      <section className="border-b border-neutral/70 bg-tint px-6 py-8 md:py-10">
         <motion.div
           className="container-narrow px-6 text-center"
           initial="hidden"
           animate="visible"
           variants={{ visible: { transition: { staggerChildren: shouldReduce ? 0 : 0.15 } } }}
         >
-          <motion.p variants={fadeUp} className="font-body text-sm uppercase tracking-widest text-white/70 mb-3">
+          <motion.p variants={fadeUp} className="font-body text-xs uppercase tracking-widest text-sage mb-2">
             Outreach Gallery
           </motion.p>
-          <motion.h1 variants={fadeUp} className="font-heading text-4xl md:text-5xl text-white leading-snug mb-6">
+          <motion.h1 variants={fadeUp} className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-3">
             Nourishing Communities Together
           </motion.h1>
-          <motion.p variants={fadeUp} className="font-body text-base text-white/85 leading-relaxed max-w-2xl mx-auto">
+          <motion.p variants={fadeUp} className="font-body text-sm md:text-base text-charcoal/70 leading-relaxed max-w-2xl mx-auto">
             A look at Oncology Nutrition Space outreach, nutrition awareness,
             community connection, and partnerships across Kenya.
           </motion.p>

@@ -51,29 +51,18 @@
   }
 
   .home-navbar {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.28), transparent);
-    border-bottom: 1px solid transparent;
-    opacity: 0;
-    transition: opacity 250ms ease, background 250ms ease;
-  }
-
-  .home-navbar:hover,
-  .home-navbar:focus-within {
+    background: rgba(251, 250, 247, 0.88);
+    border-bottom: 1px solid rgba(39, 53, 72, 0.08);
     opacity: 1;
-    background: rgba(0, 0, 0, 0.42);
+    box-shadow: 0 3px 18px rgba(39, 53, 72, 0.08);
+    backdrop-filter: blur(12px);
+    transition: background 250ms ease, box-shadow 250ms ease;
   }
 
   .home-navbar-scrolled {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.78);
-    border-bottom-color: rgba(255, 255, 255, 0.12);
-  }
-
-  /* Hover is not a reliable interaction on phones, so keep the home navigation discoverable there. */
-  @media (max-width: 1023px) {
-    .home-navbar {
-      opacity: 1;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.42), transparent);
-    }
+    background: rgba(251, 250, 247, 0.97);
+    border-bottom-color: rgba(39, 53, 72, 0.1);
+    box-shadow: 0 5px 20px rgba(39, 53, 72, 0.12);
   }
 }

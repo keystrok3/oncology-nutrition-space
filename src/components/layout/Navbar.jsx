@@ -6,9 +6,9 @@ const NAV_LINKS = [
   { label: "About",               path: "/about" },
   { label: "Programs & Services", path: "/programs" },
   { label: "Gallery",             path: "/gallery" },
-  { label: "Blog",                path: "/blog" },
-  { label: "Testimonials",        path: "/testimonials" },
-  { label: "FAQs",                path: "/faqs" },
+  // { label: "Blog",             path: "/blog" },
+  // { label: "Testimonials",     path: "/testimonials" },
+  // { label: "FAQs",             path: "/faqs" },
   { label: "Contact",             path: "/contact" },
 ];
 
@@ -33,8 +33,8 @@ export default function Navbar() {
 
   const linkClass = ({ isActive }) =>
     isActive
-      ? `${isHome ? "text-white border-white" : "text-sage border-sage"} font-medium border-b-2 pb-0.5 whitespace-nowrap`
-      : `${isHome ? "text-white/90 hover:text-white" : "text-charcoal hover:text-sage"} transition-colors duration-200 whitespace-nowrap`;
+      ? "text-sage border-sage font-medium border-b-2 pb-0.5 whitespace-nowrap"
+      : "text-charcoal/85 hover:text-sage transition-colors duration-200 whitespace-nowrap";
 
   return (
     <header
@@ -82,17 +82,17 @@ export default function Navbar() {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation menu"
           aria-expanded={menuOpen}
-          className={`lg:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8 ${isHome ? "text-white" : ""}`}
+          className="lg:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8"
         >
-          <span className={`block h-0.5 w-6 ${isHome ? "bg-white" : "bg-charcoal"} transition-transform duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-          <span className={`block h-0.5 w-6 ${isHome ? "bg-white" : "bg-charcoal"} transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`block h-0.5 w-6 ${isHome ? "bg-white" : "bg-charcoal"} transition-transform duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+          <span className={`block h-0.5 w-6 bg-charcoal transition-transform duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+          <span className={`block h-0.5 w-6 bg-charcoal transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`block h-0.5 w-6 bg-charcoal transition-transform duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
         </button>
       </nav>
 
       {/* ── Mobile Dropdown Menu ─────────────────────────────── */}
       {menuOpen && (
-        <div className={`lg:hidden ${isHome ? "bg-black/80 border-t border-white/10" : "bg-cream border-t border-neutral"} px-6 pb-6`}>
+        <div className="lg:hidden bg-cream/95 border-t border-neutral px-6 pb-6">
           <ul className="flex flex-col gap-4 pt-4">
             {NAV_LINKS.map(({ label, path }) => (
               <li key={path}>

@@ -872,8 +872,8 @@ export default function Home() {
       <WhatWeDo shouldReduce={shouldReduce} />
       <OutreachHighlights shouldReduce={shouldReduce} />
       <PartnerStrip shouldReduce={shouldReduce} />
-      <BlogPreview shouldReduce={shouldReduce} />
-      <Testimonials shouldReduce={shouldReduce} />
+      {/* <BlogPreview shouldReduce={shouldReduce} /> */}
+      {/* <Testimonials shouldReduce={shouldReduce} /> */}
       <CTABanner shouldReduce={shouldReduce} />
     </>
   );

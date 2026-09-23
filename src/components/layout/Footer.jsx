@@ -4,9 +4,10 @@ const QUICK_LINKS = [
   { label: "Home",                path: "/" },
   { label: "About",               path: "/about" },
   { label: "Programs & Services", path: "/programs" },
-  { label: "Blog",                path: "/blog" },
-  { label: "Testimonials",        path: "/testimonials" },
-  { label: "FAQs",                path: "/faqs" },
+  // { label: "Blog",             path: "/blog" },
+  // { label: "Testimonials",     path: "/testimonials" },
+  // { label: "FAQs",             path: "/faqs" },
+  { label: "Gallery",             path: "/gallery" },
   { label: "Contact",             path: "/contact" },
 ];
 
