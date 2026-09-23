@@ -41,9 +41,9 @@ const PROGRAMS = [
     icon:        "🤝",
     audience:    "Patients, caregivers, and clinicians",
     description:
-      "An active online community of over 1,500 members spanning all 47 counties in Kenya and reaching internationally. Members share experiences, ask questions, and access reliable oncology nutrition guidance in a safe, moderated space.",
+      "An active online community of nearly 2,000 members spanning all 47 counties in Kenya and reaching internationally. Members share experiences, ask questions, and access reliable oncology nutrition guidance in a safe, moderated space.",
     highlights: [
-      "1,500+ members across Kenya and beyond",
+      "Nearly 2,000 members across Kenya and beyond",
       "Moderated for accuracy and safety",
       "Peer support combined with professional guidance",
     ],
@@ -59,6 +59,19 @@ const PROGRAMS = [
       "Targeting all 47 counties across Kenya",
       "Focus on underserved and rural communities",
       "In-person education and support sessions",
+    ],
+  },
+  {
+    title:       "Wellness / Fitness Buddies",
+    status:      "active",
+    icon:        "💪",
+    audience:    "Cancer patients and people in treatment",
+    description:
+      "Launched this year to encourage safe, appropriate exercise during treatment. Fitness Buddies helps participants stay active with encouragement and shared accountability to support quicker recovery, healing, strength, and overall wellbeing.",
+    highlights: [
+      "Exercise encouragement during treatment",
+      "Buddy support and shared accountability",
+      "Activities adapted to individual ability and clinical guidance",
     ],
   },
   {

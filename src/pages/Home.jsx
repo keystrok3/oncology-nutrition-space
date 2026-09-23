@@ -92,7 +92,7 @@ function AnimatedCounter({ value, isInView, shouldReduce }) {
 // ─── Data ─────────────────────────────────────────────────────
 
 const STATS = [
-  { value: "1,500+", label: "Community Members" },
+  { value: "2000", label: "Community Members" },
   { value: "47",     label: "Counties Reached"  },
   { value: "3+",     label: "Years of Impact"   },
   { value: "5+",     label: "Countries Reached" },
@@ -116,6 +116,12 @@ const PROGRAMS = [
     description:
       "Planned visits targeting cancer patients across Kenya's 47 counties, bringing oncology nutrition support directly to underserved communities.",
     icon: "📍",
+  },
+  {
+    title: "Wellness / Fitness Buddies",
+    description:
+      "A new initiative launched this year to encourage safe, appropriate exercise during treatment, supporting quicker recovery, healing, strength, and wellbeing.",
+    icon: "💪",
   },
   {
     title: "Capacity Building",
@@ -299,10 +305,11 @@ function Mission({ shouldReduce }) {
         >
           Oncology Nutrition Space was born out of a deeply personal experience:
           watching a loved one battle colorectal cancer while the critical role of
-          nutrition went unaddressed. Founded in Eldoret in 2022 by Registered
+          nutrition went unaddressed. Founded in 2022/2023 by Registered
           Nutritionist Nancy Muyoka Makhakha, it began as an online support group
-          and has since grown into a community of over 1,500 members across all 47
-          counties in Kenya and beyond.
+          and has since grown into a community of nearly 2,000 members across all
+          47 counties in Kenya and beyond. Oncology Nutrition Space is also a
+          registered member of KENCO (Kenya Network of Cancer Organizations).
         </motion.p>
 
         <motion.p
@@ -365,7 +372,6 @@ function TheProblem({ shouldReduce }) {
             {[
               { stat: "85%",   detail: "of cancer patients face malnutrition during treatment" },
               { stat: "2×",    detail: "higher risk of treatment complications in malnourished patients" },
-              { stat: "< 10%", detail: "of oncology units in Kenya have a dedicated nutritionist" },
             ].map(({ stat, detail }) => (
               <motion.div
                 key={stat}
@@ -449,6 +455,69 @@ function WhatWeDo({ shouldReduce }) {
               View All Programs
             </Link>
           </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ── Outreach & Partnerships ─────────────────────────────────
+// Outreach images can be added later at the paths listed in the design notes.
+function OutreachHighlights({ shouldReduce }) {
+  const { ref, isInView } = useReveal();
+  const fadeUpVariants = useFadeUpVariants(shouldReduce);
+  const highlights = [
+    { location: "Nakuru", icon: "📍" },
+    { location: "Kakamega", icon: "📍" },
+    { location: "Nairobi", icon: "📍" },
+  ];
+
+  return (
+    <section className="section-padding bg-tint" ref={ref}>
+      <div className="container-wide px-6 md:px-12 lg:px-24">
+        <motion.div
+          className="text-center mb-10"
+          variants={fadeUpVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
+            Photos & Outreach Highlights
+          </p>
+          <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-4">
+            Taking Support Into Communities
+          </h2>
+          <p className="font-body text-base text-charcoal/75 leading-relaxed max-w-2xl mx-auto">
+            Our outreach work has taken us to Nakuru, Kakamega, and Nairobi. We
+            also actively participate in and partner with government initiatives,
+            including the National Cancer Control (NCI) project this year.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-3 gap-6"
+          variants={useStaggerVariants(shouldReduce, 0.12)}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {highlights.map(({ location, icon }) => (
+            <motion.div
+              key={location}
+              variants={fadeUpVariants}
+              className="min-h-56 rounded-lg border border-neutral bg-white overflow-hidden shadow-sm"
+            >
+              <div className="h-40 bg-sage/10 flex items-center justify-center">
+                <span className="text-4xl" aria-hidden="true">{icon}</span>
+                <span className="sr-only">{location} outreach photo</span>
+              </div>
+              <div className="p-4">
+                <h3 className="font-heading text-lg text-charcoal">{location}</h3>
+                <p className="font-body text-sm text-charcoal/60">
+                  Outreach photo coming soon
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
@@ -701,6 +770,7 @@ export default function Home() {
       <Mission shouldReduce={shouldReduce} />
       <TheProblem shouldReduce={shouldReduce} />
       <WhatWeDo shouldReduce={shouldReduce} />
+      <OutreachHighlights shouldReduce={shouldReduce} />
       <BlogPreview shouldReduce={shouldReduce} />
       <Testimonials shouldReduce={shouldReduce} />
       <CTABanner shouldReduce={shouldReduce} />

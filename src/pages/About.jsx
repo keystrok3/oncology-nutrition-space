@@ -44,9 +44,10 @@ function AboutHero() {
           variants={fadeUp}
           className="font-body text-base text-white/85 leading-relaxed max-w-2xl mx-auto"
         >
-          We are a registered community-based organization founded in Kenya,
-          with a mission to transform cancer care through evidence-based
-          nutrition and compassionate community support.
+          We are a registered community-based organization founded in Kenya in
+          2022/2023, and a registered member of KENCO (Kenya Network of Cancer
+          Organizations). Our mission is to transform cancer care through
+          evidence-based nutrition and compassionate community support.
         </motion.p>
       </motion.div>
     </section>
@@ -89,7 +90,7 @@ function FounderStory() {
             </p>
 
             <p className="font-body text-base text-charcoal/80 leading-relaxed">
-              She founded it in 2022 while taking care of her Dad, who was
+              She founded it in 2022/2023 while taking care of her Dad, who was
               fighting colorectal cancer.
             </p>
           </motion.div>
