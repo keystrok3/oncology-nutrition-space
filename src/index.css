@@ -51,17 +51,16 @@
   }
 
   .home-navbar {
-    background: rgba(251, 250, 247, 0.88);
+    background: #fff;
     border-bottom: 1px solid rgba(39, 53, 72, 0.08);
     opacity: 1;
     box-shadow: 0 3px 18px rgba(39, 53, 72, 0.08);
-    backdrop-filter: blur(12px);
     transition: background 250ms ease, box-shadow 250ms ease;
   }
 
   .home-navbar-scrolled {
     opacity: 1;
-    background: rgba(251, 250, 247, 0.97);
+    background: #fff;
     border-bottom-color: rgba(39, 53, 72, 0.1);
     box-shadow: 0 5px 20px rgba(39, 53, 72, 0.12);
   }

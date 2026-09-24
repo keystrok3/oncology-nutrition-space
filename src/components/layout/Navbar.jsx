@@ -42,7 +42,7 @@ export default function Navbar() {
         ? scrolled
           ? "home-navbar home-navbar-scrolled fixed top-0 left-0 right-0"
           : "home-navbar absolute top-0 left-0 right-0"
-        : "bg-cream border-b border-neutral sticky top-0"} z-50`}
+        : "bg-white border-b border-neutral sticky top-0"} z-50`}
     >
 
       {/* Reduced py-3 from py-4 to bring navbar height down */}
@@ -52,7 +52,7 @@ export default function Navbar() {
         {/* ── Logo ───────────────────────────────────────────── */}
         <Link to="/" className="shrink-0">
           <img
-            src="/images/logo2.svg"
+            src="/images/ons-logo.jpeg"
             alt="Oncology Nutrition Space"
             className="h-16 w-auto"
           />
