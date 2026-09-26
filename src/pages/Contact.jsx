@@ -29,13 +29,10 @@ export default function Contact() {
 
       <section className="section-padding bg-cream">
         <div className="container-wide px-6 md:px-12 lg:px-24">
-          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
-            <article className="rounded-xl border border-neutral/80 bg-white p-7 shadow-sm md:p-9">
-              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sage/10 text-2xl" aria-hidden="true">
-                ✉
-              </span>
-              <p className="font-body text-xs uppercase tracking-widest text-sage mb-2">
-                Email
+          <div className="mx-auto grid max-w-5xl divide-y divide-neutral md:grid-cols-2 md:divide-x md:divide-y-0">
+            <article className="py-8 md:px-10 md:py-4 md:pl-0">
+              <p className="mb-5 font-mono text-xs uppercase tracking-widest text-sage">
+                01 / Email
               </p>
               <h2 className="font-heading text-2xl text-charcoal mb-3">
                 Send us a message
@@ -57,12 +54,9 @@ export default function Contact() {
               </div>
             </article>
 
-            <article className="rounded-xl border border-neutral/80 bg-white p-7 shadow-sm md:p-9">
-              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sage/10 text-2xl" aria-hidden="true">
-                💬
-              </span>
-              <p className="font-body text-xs uppercase tracking-widest text-sage mb-2">
-                Community
+            <article className="py-8 md:px-10 md:py-4 md:pr-0">
+              <p className="mb-5 font-mono text-xs uppercase tracking-widest text-sage">
+                02 / Community
               </p>
               <h2 className="font-heading text-2xl text-charcoal mb-3">
                 Connect on WhatsApp
@@ -82,7 +76,7 @@ export default function Contact() {
             </article>
           </div>
 
-          <div className="mx-auto mt-12 max-w-3xl rounded-xl bg-tint px-6 py-7 text-center md:px-10">
+          <div className="mx-auto mt-12 max-w-3xl border-l-2 border-sage bg-tint px-6 py-7 md:px-10">
             <h2 className="font-heading text-xl text-charcoal mb-2">
               Not sure where to start?
             </h2>

@@ -67,7 +67,7 @@ function FounderStory() {
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div variants={fadeUp} className="flex justify-center">
-            <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden bg-sage/10 border border-neutral flex items-center justify-center">
+            <div className="flex h-72 w-72 items-center justify-center overflow-hidden bg-tint md:h-80 md:w-80">
               <p className="font-body text-xs text-sage/40 uppercase tracking-widest text-center px-6">
                 Founder photo coming soon
               </p>
@@ -107,16 +107,16 @@ function MissionVision() {
     <section className="section-padding bg-tint" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 divide-y divide-sage/30 md:grid-cols-2 md:divide-x md:divide-y-0"
           variants={stagger}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.div
             variants={fadeUp}
-            className="bg-white rounded-lg p-8 border border-neutral shadow-sm"
+            className="border-t border-sage/50 py-8 md:px-10 md:first:pl-0"
           >
-            <span className="text-3xl mb-4 block">Mission</span>
+            <span className="mb-4 block font-mono text-xs uppercase tracking-widest text-sage">01 / Mission</span>
             <h3 className="font-heading text-2xl text-charcoal mb-4">
               Our Mission
             </h3>
@@ -129,9 +129,9 @@ function MissionVision() {
 
           <motion.div
             variants={fadeUp}
-            className="bg-white rounded-lg p-8 border border-neutral shadow-sm"
+            className="border-t border-sage/50 py-8 md:px-10"
           >
-            <span className="text-3xl mb-4 block">Vision</span>
+            <span className="mb-4 block font-mono text-xs uppercase tracking-widest text-sage">02 / Vision</span>
             <h3 className="font-heading text-2xl text-charcoal mb-4">
               Our Vision
             </h3>
@@ -192,17 +192,18 @@ function Philosophy() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+          className="grid grid-cols-1 gap-x-10 sm:grid-cols-2 sm:gap-y-0"
           variants={stagger}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {principles.map(({ title, description }) => (
+          {principles.map(({ title, description }, index) => (
             <motion.div
               key={title}
               variants={fadeUp}
-              className="bg-white rounded-lg p-6 border-l-4 border-sage shadow-sm"
+              className="border-t border-sage/40 py-6"
             >
+              <p className="mb-3 font-mono text-xs tracking-widest text-sage">0{index + 1}</p>
               <h3 className="font-heading text-lg text-charcoal mb-2">
                 {title}
               </h3>
@@ -261,7 +262,7 @@ function LongTermVision() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4"
           variants={stagger}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -270,9 +271,9 @@ function LongTermVision() {
             <motion.div
               key={phase}
               variants={fadeUp}
-              className="bg-white rounded-lg p-6 border border-neutral shadow-sm text-center"
+              className="border-t-2 border-sage/50 py-5"
             >
-              <span className="inline-block font-body text-xs uppercase tracking-widest text-white bg-sage px-3 py-1 rounded-full mb-4">
+              <span className="mb-5 inline-block font-mono text-xs uppercase tracking-widest text-sage">
                 {phase}
               </span>
               <h3 className="font-heading text-lg text-charcoal mb-2">

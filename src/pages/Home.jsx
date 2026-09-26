@@ -202,7 +202,7 @@ function Hero({ shouldReduce }) {
 
     const timer = setInterval(() => {
       setActiveSlide((current) => (current + 1) % HERO_SLIDES.length);
-    }, 5000);
+    }, 10000);
 
     return () => clearInterval(timer);
   }, [shouldReduce]);
@@ -211,7 +211,7 @@ function Hero({ shouldReduce }) {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-charcoal"
+      className="grain relative flex min-h-screen items-center overflow-hidden bg-charcoal"
       aria-label="Community outreach highlights"
     >
       <AnimatePresence initial={false}>
@@ -226,19 +226,28 @@ function Hero({ shouldReduce }) {
           transition={{ duration: shouldReduce ? 0 : 2, ease: "easeInOut" }}
         />
       </AnimatePresence>
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/25" />
+      {/* Directional overlays keep the community photo visible while giving the headline a dark field. */}
+      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/90 via-charcoal/55 to-charcoal/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-charcoal/45 via-transparent to-charcoal/20" />
 
       {/* Stagger container — children animate in sequence */}
       <motion.div
-        className="relative z-10 container-narrow text-center px-6 py-24"
+        className="relative z-10 container-wide w-full px-6 pt-36 pb-28 text-left sm:px-10 md:px-16 lg:px-24"
         variants={staggerVariants}
         initial="hidden"
         animate="visible"
       >
+        <motion.p
+          variants={useFadeUpVariants(shouldReduce)}
+          className="mb-6 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-cream/85 md:text-sm"
+        >
+          <span className="h-2 w-2 rounded-full bg-sage-light shadow-[0_0_14px_rgba(118,154,106,0.8)]" />
+          {slide.label}
+        </motion.p>
+
         {/* Headline */}
         <motion.h1
-          className="font-heading text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6"
+          className="mb-8 max-w-5xl font-heading text-[clamp(3.5rem,8vw,7.5rem)] leading-[0.94] tracking-tight text-cream"
         >
           {(() => {
             let characterIndex = 0;
@@ -267,14 +276,26 @@ function Hero({ shouldReduce }) {
           })()}
         </motion.h1>
 
+        <motion.div
+          variants={useFadeUpVariants(shouldReduce)}
+          className="flex flex-col gap-3 sm:flex-row sm:items-center"
+        >
+          <Link to="/about" className="inline-flex min-h-12 items-center justify-center rounded-full bg-sage px-7 py-3 font-mono text-xs uppercase tracking-widest text-white transition-colors hover:bg-sage-dark">
+            Explore Our Mission
+          </Link>
+          <Link to="/contact" className="inline-flex min-h-12 items-center justify-center rounded-full border border-cream/60 px-7 py-3 font-mono text-xs uppercase tracking-widest text-cream transition-colors hover:bg-cream hover:text-charcoal">
+            Get Support <span aria-hidden="true" className="ml-2">↗</span>
+          </Link>
+        </motion.div>
+
       </motion.div>
 
-      <div className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3">
+      <div className="absolute bottom-7 right-6 z-10 flex items-center gap-3 sm:right-10 md:right-16 lg:right-24">
         <button
           type="button"
           aria-label="Previous slide"
           onClick={() => setActiveSlide((current) => (current - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
-          className="hidden px-2 py-1 text-lg text-white/60 transition-colors hover:text-white sm:block"
+          className="hidden px-2 py-1 text-lg text-cream/60 transition-colors hover:text-cream sm:block"
         >
           ←
         </button>
@@ -285,8 +306,8 @@ function Hero({ shouldReduce }) {
             aria-label={`Show slide ${index + 1}: ${item.label}`}
             aria-current={index === activeSlide ? "true" : undefined}
             onClick={() => setActiveSlide(index)}
-            className={`h-2 w-2 rounded-full border border-white/70 transition-colors ${
-              index === activeSlide ? "bg-white" : "bg-white/20"
+            className={`h-2 w-2 rounded-full border border-cream/70 transition-colors ${
+              index === activeSlide ? "bg-cream" : "bg-cream/20"
             }`}
           />
         ))}
@@ -294,7 +315,7 @@ function Hero({ shouldReduce }) {
           type="button"
           aria-label="Next slide"
           onClick={() => setActiveSlide((current) => (current + 1) % HERO_SLIDES.length)}
-          className="hidden px-2 py-1 text-lg text-white/60 transition-colors hover:text-white sm:block"
+          className="hidden px-2 py-1 text-lg text-cream/60 transition-colors hover:text-cream sm:block"
         >
           →
         </button>
@@ -310,17 +331,17 @@ function StatsStrip({ shouldReduce }) {
   const fadeUpVariants = useFadeUpVariants(shouldReduce);
 
   return (
-    <section className="bg-sage py-10" ref={ref}>
-      <div className="container-wide px-6 md:px-12 lg:px-24">
+    <section className="grain relative overflow-hidden bg-charcoal py-12 md:py-16" ref={ref}>
+      <div className="container-wide relative z-10 px-6 md:px-12 lg:px-24">
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+          className="grid grid-cols-2 gap-y-10 text-left md:grid-cols-4 md:gap-8"
           variants={staggerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
           {STATS.map(({ value, label }) => (
-            <motion.div key={label} variants={fadeUpVariants}>
-              <p className="font-heading text-3xl font-bold text-white mb-1">
+            <motion.div key={label} variants={fadeUpVariants} className="border-l border-sage/40 pl-4 md:pl-6">
+              <p className="font-heading text-5xl md:text-7xl text-cream mb-2">
                 {/* Animated counter per stat */}
                 <AnimatedCounter
                   value={value}
@@ -328,7 +349,7 @@ function StatsStrip({ shouldReduce }) {
                   shouldReduce={shouldReduce}
                 />
               </p>
-              <p className="font-body text-sm text-white/80 uppercase tracking-wide">
+              <p className="font-mono text-[0.65rem] md:text-xs text-sage-light uppercase tracking-widest">
                 {label}
               </p>
             </motion.div>
@@ -346,16 +367,17 @@ function Mission({ shouldReduce }) {
   const staggerVariants = useStaggerVariants(shouldReduce);
 
   return (
-    <section className="section-padding bg-cream" ref={ref}>
+    <section className="section-padding relative overflow-hidden bg-cream" ref={ref}>
+      <span aria-hidden="true" className="pointer-events-none absolute bottom-0 right-[4%] hidden font-heading text-[15rem] leading-none text-charcoal/[0.06] md:block">ONS</span>
       <motion.div
-        className="container-narrow text-center"
+        className="container-narrow relative z-10 text-center"
         variants={staggerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
       >
         <motion.p
           variants={fadeUpVariants}
-          className="font-body text-sm uppercase tracking-widest text-sage mb-3"
+          className="font-mono text-xs uppercase tracking-widest text-sage mb-3"
         >
           Our Mission
         </motion.p>
@@ -401,33 +423,33 @@ function TheProblem({ shouldReduce }) {
   const staggerVariants = useStaggerVariants(shouldReduce);
 
   return (
-    <section className="section-padding bg-tint" ref={ref}>
+    <section className="grain relative overflow-hidden section-padding bg-charcoal" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+          className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
           variants={staggerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Text side */}
           <motion.div variants={fadeUpVariants}>
-            <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
+            <p className="font-mono text-xs uppercase tracking-widest text-sage-light mb-3">
               The Problem
             </p>
-            <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-6">
+            <h2 className="font-heading text-3xl md:text-4xl text-cream leading-snug mb-6">
               Nutrition Is Overlooked <br /> in Cancer Treatment
             </h2>
-            <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
+            <p className="font-body text-base text-cream/80 leading-relaxed mb-4">
               Up to 85% of cancer patients experience malnutrition at some
               point during their treatment yet nutritional care remains an
               afterthought in most oncology settings across Africa.
             </p>
-            <p className="font-body text-base text-charcoal/80 leading-relaxed mb-4">
+            <p className="font-body text-base text-cream/80 leading-relaxed mb-4">
               The consequences are severe: reduced tolerance to treatment,
               longer hospital stays, higher complication rates, and lower
               survival odds. This is a solvable problem.
             </p>
-            <p className="font-body text-base text-charcoal/80 leading-relaxed">
+            <p className="font-body text-base text-cream/80 leading-relaxed">
               We are here to solve it through structured programs, community
               support, and relentless advocacy for change.
             </p>
@@ -480,7 +502,7 @@ function WhatWeDo({ shouldReduce }) {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
+          <p className="font-mono text-xs uppercase tracking-widest text-sage mb-3">
             What We Do
           </p>
           <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug">
@@ -520,7 +542,7 @@ function WhatWeDo({ shouldReduce }) {
             <p className="font-heading text-lg text-sage mb-3">
               Want to learn more?
             </p>
-            <Link to="/programs" className="btn-primary">
+            <Link to="/programs" className="btn-primary rounded-full font-mono uppercase tracking-widest text-xs">
               View All Programs
             </Link>
           </motion.div>
@@ -544,7 +566,7 @@ function OutreachHighlights({ shouldReduce }) {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
+          <p className="font-mono text-xs uppercase tracking-widest text-sage mb-3">
             Photos & Outreach Highlights
           </p>
           <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-4">
@@ -590,35 +612,74 @@ function OutreachHighlights({ shouldReduce }) {
 
 function PartnerStrip({ shouldReduce }) {
   const { ref, isInView } = useReveal();
-  const partners = ["KENCO", "NCI-Kenya", "KNH", "Nakuru Hospice", "National Cancer Control"];
+  const partners = [
+    { name: "KENCO", image: "/images/partners/kenco-logo.jpg" },
+    { name: "NCI-Kenya", image: "/images/partners/nci-kenya-logo.png", dark: true },
+    { name: "Kenyatta National Hospital", image: "/images/partners/knh-logo.jpg" },
+    { name: "National Cancer Control Programme", image: "/images/partners/nccp-logo.jpg" },
+    { name: "Nakuru Hospice" },
+  ];
 
   return (
-    <section className="border-y border-neutral/70 bg-cream py-10" ref={ref}>
+    <section className="border-y border-neutral/70 bg-cream py-12 md:py-16" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
         <motion.div
-          className="flex flex-col items-center gap-6 md:flex-row md:justify-between"
+          className="mb-8 flex flex-col items-center gap-3 text-center"
           variants={useStaggerVariants(shouldReduce, 0.08)}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.p
             variants={useFadeUpVariants(shouldReduce)}
-            className="font-body text-xs uppercase tracking-[0.18em] text-charcoal/55 text-center md:text-left"
+            className="font-mono text-[0.65rem] uppercase tracking-widest text-sage"
           >
             Working alongside
           </motion.p>
-          <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
-            {partners.map((partner) => (
-              <motion.span
-                key={partner}
-                variants={useFadeUpVariants(shouldReduce)}
-                className="font-heading text-base text-charcoal/75"
-              >
-                {partner}
-              </motion.span>
-            ))}
-          </div>
+          <motion.h2
+            variants={useFadeUpVariants(shouldReduce)}
+            className="font-heading text-2xl text-charcoal md:text-3xl"
+          >
+            Partners & Sponsors
+          </motion.h2>
         </motion.div>
+
+        <motion.div
+          className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5"
+          variants={useStaggerVariants(shouldReduce, 0.08)}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {partners.map(({ name, image, dark }) => (
+            <motion.div
+              key={name}
+              variants={useFadeUpVariants(shouldReduce)}
+              className={`flex min-h-24 items-center justify-center rounded-lg border border-neutral px-4 py-3 ${dark ? "bg-charcoal" : "bg-white"}`}
+            >
+              {image ? (
+                <img src={image} alt={name} loading="lazy" className="max-h-16 w-full object-contain" />
+              ) : (
+                <span className="font-heading text-center text-base text-charcoal">{name}</span>
+              )}
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.figure
+          variants={useFadeUpVariants(shouldReduce)}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="mt-8 overflow-hidden rounded-xl border border-neutral bg-white p-3 md:p-6"
+        >
+          <img
+            src="/images/partners/national-cancer-survivors-day-2026-sponsors.jpg"
+            alt="Event sponsor logos: Ministry of Health, National Cancer Control Programme, Kenyatta National Hospital, Texas Cancer Centre, La Roche-Posay, ANT, Oncology Nutrition Space, Kilele Health Association, Sukuma, Guru Nanak Hospital, RFH Healthcare, Henzo Kenya, CMMB, and Kevian."
+            loading="lazy"
+            className="mx-auto h-auto w-full max-w-5xl"
+          />
+          <figcaption className="mt-3 text-center font-mono text-[0.65rem] uppercase tracking-widest text-charcoal/50">
+            National Cancer Survivors Day Walk · 2026
+          </figcaption>
+        </motion.figure>
       </div>
     </section>
   );
@@ -655,7 +716,7 @@ function BlogPreview({ shouldReduce }) {
           animate={isInView ? "visible" : "hidden"}
         >
           <div>
-            <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
+            <p className="font-mono text-xs uppercase tracking-widest text-sage mb-3">
               From the Blog
             </p>
             <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug">
@@ -776,7 +837,7 @@ function Testimonials({ shouldReduce }) {
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
       >
-        <p className="font-body text-sm uppercase tracking-widest text-sage mb-3">
+        <p className="font-mono text-xs uppercase tracking-widest text-sage mb-3">
           Voices of Impact
         </p>
         <h2 className="font-heading text-3xl md:text-4xl text-charcoal leading-snug mb-4">
@@ -832,7 +893,7 @@ function CTABanner({ shouldReduce }) {
             href="https://chat.whatsapp.com/JpnN1LDuHXk2OejkgmCUj5"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-white text-sage font-body font-medium text-sm px-6 py-3 rounded-md hover:bg-neutral transition-colors duration-200"
+            className="inline-flex items-center justify-center gap-2 bg-white text-sage font-mono uppercase tracking-widest text-xs px-6 py-3 rounded-full hover:bg-neutral transition-colors duration-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -847,7 +908,7 @@ function CTABanner({ shouldReduce }) {
 
           <Link
             to="/contact"
-            className="inline-block border border-white text-white font-body font-medium text-sm px-6 py-3 rounded-md hover:bg-white hover:text-sage transition-colors duration-200"
+            className="inline-block border border-white text-white font-mono uppercase tracking-widest text-xs px-6 py-3 rounded-full hover:bg-white hover:text-sage transition-colors duration-200"
           >
             Get in Touch
           </Link>

@@ -15,11 +15,11 @@ const YEAR = new Date().getFullYear();
 
 export default function Footer() {
   return (
-    <footer className="bg-charcoal text-neutral mt-auto">
+    <footer className="grain relative overflow-hidden bg-charcoal-950 text-neutral mt-auto">
 
       {/* ── Main Footer Grid ───────────────────────────────── */}
       {/* Each column is centered — text, links, and icons all align to center */}
-      <div className="container-wide px-6 md:px-12 lg:px-24 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="container-wide relative z-10 px-6 md:px-12 lg:px-24 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
 
         {/* Column 1 — About the Initiative */}
         <div className="flex flex-col items-center text-center">
@@ -38,7 +38,7 @@ export default function Footer() {
 
         {/* Column 2 — Quick Links */}
         <div className="flex flex-col items-center text-center">
-          <h4 className="font-heading text-white text-base font-semibold mb-4">
+          <h4 className="font-mono text-sage-light text-xs uppercase tracking-widest mb-4">
             Quick Links
           </h4>
           <ul className="flex flex-col gap-2">
@@ -57,7 +57,7 @@ export default function Footer() {
 
         {/* Column 3 — Connect */}
         <div className="flex flex-col items-center text-center">
-          <h4 className="font-heading text-white text-base font-semibold mb-4">
+          <h4 className="font-mono text-sage-light text-xs uppercase tracking-widest mb-4">
             Connect With Us
           </h4>
 
@@ -92,7 +92,7 @@ export default function Footer() {
       </div>
 
       {/* ── Bottom Bar ─────────────────────────────────────── */}
-      <div className="border-t border-neutral/20 py-4 px-6 md:px-12 lg:px-24">
+      <div className="relative z-10 border-t border-sage/30 py-4 px-6 md:px-12 lg:px-24">
         <p className="font-body text-xs text-neutral/60 text-center">
           &copy; {YEAR} Oncology Nutrition Space. All rights reserved.
         </p>

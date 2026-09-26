@@ -25,7 +25,6 @@ const PROGRAMS = [
   {
     title:       "Patient & Caregiver Education",
     status:      "active",
-    icon:        "🎓",
     audience:    "Cancer patients and their families",
     description:
       "Daily, evidence-based nutrition articles and guidance shared directly with patients and caregivers navigating cancer treatment. We break down complex clinical information into practical, accessible advice — covering topics from managing treatment side effects through diet, to building strength during recovery.",
@@ -38,7 +37,6 @@ const PROGRAMS = [
   {
     title:       "Community Support Network",
     status:      "active",
-    icon:        "🤝",
     audience:    "Patients, caregivers, and clinicians",
     description:
       "An active online community of nearly 2,000 members spanning all 47 counties in Kenya and reaching internationally. Members share experiences, ask questions, and access reliable oncology nutrition guidance in a safe, moderated space.",
@@ -51,7 +49,6 @@ const PROGRAMS = [
   {
     title:       "County Outreach Program",
     status:      "coming-soon",
-    icon:        "📍",
     audience:    "Cancer patients in underserved communities",
     description:
       "Planned visits across Kenya's 47 counties to bring oncology nutrition support directly to patients in their communities. This program aims to bridge the gap between digital access and on-the-ground impact — reaching patients who may not have consistent internet access but urgently need nutritional support.",
@@ -64,7 +61,6 @@ const PROGRAMS = [
   {
     title:       "Wellness / Fitness Buddies",
     status:      "active",
-    icon:        "💪",
     audience:    "Cancer patients and people in treatment",
     description:
       "Launched this year to encourage safe, appropriate exercise during treatment. Fitness Buddies helps participants stay active with encouragement and shared accountability to support quicker recovery, healing, strength, and overall wellbeing.",
@@ -77,7 +73,6 @@ const PROGRAMS = [
   {
     title:       "Capacity Building",
     status:      "coming-soon",
-    icon:        "🏗️",
     audience:    "Healthcare professionals and community health workers",
     description:
       "Training programs designed to equip nurses, clinicians, and community health workers with the knowledge and tools to integrate evidence-based nutrition into their oncology care practice. Nutrition should be a standard part of every cancer care team — not an afterthought.",
@@ -90,7 +85,6 @@ const PROGRAMS = [
   {
     title:       "Institutional Collaboration",
     status:      "coming-soon",
-    icon:        "🏥",
     audience:    "Hospitals, research institutions, and NGOs",
     description:
       "Partnering with healthcare institutions, research bodies, and non-governmental organizations to embed nutrition into standard oncology protocols. We aim to work alongside existing systems — not in isolation — to drive sustainable, systemic change.",
@@ -103,7 +97,6 @@ const PROGRAMS = [
   {
     title:       "Advocacy",
     status:      "coming-soon",
-    icon:        "📢",
     audience:    "Policymakers, health systems, and the public",
     description:
       "Championing policy change at local, national, and continental levels to ensure oncology nutrition is recognized as an essential component of cancer care. We use evidence, community voices, and strategic partnerships to push for meaningful reform.",
@@ -174,7 +167,7 @@ function YearlyTheme() {
     <section className="section-padding bg-cream" ref={ref}>
       <div className="container-wide px-6 md:px-12 lg:px-24">
         <motion.div
-          className="bg-white border border-blue/40 rounded-2xl p-8 md:p-12 text-center shadow-sm"
+          className="border-y border-blue/30 bg-tint px-6 py-10 text-center md:px-12 md:py-14"
           variants={stagger}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -182,7 +175,7 @@ function YearlyTheme() {
           {/* Year label */}
           <motion.span
             variants={fadeUp}
-            className="inline-block font-body text-xs uppercase tracking-widest text-blue bg-blue/10 px-4 py-1.5 rounded-full mb-6"
+            className="mb-6 inline-block font-mono text-xs uppercase tracking-widest text-blue"
           >
             2025 Annual Theme
           </motion.span>
@@ -240,59 +233,51 @@ function ProgramsList() {
           </h2>
         </motion.div>
 
-        {/* Program cards */}
+        {/* Program list */}
         <motion.div
-          className="flex flex-col gap-6"
+          className="flex flex-col"
           variants={stagger}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {PROGRAMS.map(({ title, status, icon, audience, description, highlights }) => (
+          {PROGRAMS.map(({ title, status, audience, description, highlights }, index) => (
             <motion.div
               key={title}
               variants={fadeUp}
-              className="bg-white rounded-lg border border-neutral shadow-sm overflow-hidden"
+              className="grid grid-cols-1 gap-5 border-t border-neutral py-7 first:border-t-2 first:border-sage/70 md:grid-cols-[4rem_minmax(0,1fr)] md:gap-8 md:py-9"
             >
-              <div className="p-6 md:p-8">
-                <div className="flex flex-col md:flex-row md:items-start gap-6">
-
-                  {/* Icon */}
-                  <span className="text-4xl shrink-0">{icon}</span>
-
-                  {/* Content */}
-                  <div className="flex-1">
-                    {/* Title row */}
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-3">
-                      <h3 className="font-heading text-xl text-charcoal">
-                        {title}
-                      </h3>
-                      <StatusBadge status={status} />
-                    </div>
-
-                    {/* Audience */}
-                    <p className="font-body text-xs uppercase tracking-widest text-blue mb-3">
-                      For: {audience}
-                    </p>
-
-                    {/* Description */}
-                    <p className="font-body text-sm text-charcoal/70 leading-relaxed mb-5">
-                      {description}
-                    </p>
-
-                    {/* Highlights */}
-                    <ul className="flex flex-col gap-2">
-                      {highlights.map((point) => (
-                        <li
-                          key={point}
-                          className="flex items-start gap-2 font-body text-sm text-charcoal/70"
-                        >
-                          <span className="text-sage mt-0.5 shrink-0">✓</span>
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+              <span className="font-mono text-lg tracking-widest text-sage">0{index + 1}</span>
+              <div>
+                {/* Title row */}
+                <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <h3 className="font-heading text-xl text-charcoal">
+                    {title}
+                  </h3>
+                  <StatusBadge status={status} />
                 </div>
+
+                {/* Audience */}
+                <p className="mb-3 font-body text-xs uppercase tracking-widest text-blue">
+                  For: {audience}
+                </p>
+
+                {/* Description */}
+                <p className="mb-5 font-body text-sm leading-relaxed text-charcoal/70">
+                  {description}
+                </p>
+
+                {/* Highlights */}
+                <ul className="flex flex-col gap-2">
+                  {highlights.map((point) => (
+                    <li
+                      key={point}
+                      className="flex items-start gap-2 font-body text-sm text-charcoal/70"
+                    >
+                      <span className="mt-0.5 shrink-0 text-sage">✓</span>
+                      {point}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.div>
           ))}

@@ -31,10 +31,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", updateScrollState);
   }, [isHome]);
 
-  const linkClass = ({ isActive }) =>
-    isActive
+  const onDarkHero = isHome && !scrolled && !menuOpen;
+  const linkClass = ({ isActive }) => {
+    if (onDarkHero) {
+      return isActive
+        ? "text-white border-white font-medium border-b-2 pb-0.5 whitespace-nowrap"
+        : "text-white/85 hover:text-white transition-colors duration-200 whitespace-nowrap";
+    }
+
+    return isActive
       ? "text-sage border-sage font-medium border-b-2 pb-0.5 whitespace-nowrap"
       : "text-charcoal/85 hover:text-sage transition-colors duration-200 whitespace-nowrap";
+  };
 
   return (
     <header
@@ -50,11 +58,11 @@ export default function Navbar() {
 
         {/* ── Logo ───────────────────────────────────────────── */}
         {/* ── Logo ───────────────────────────────────────────── */}
-        <Link to="/" className="shrink-0">
+        <Link to="/" className="shrink-0 rounded-sm bg-cream p-1.5">
           <img
             src="/images/ons-logo.jpeg"
             alt="Oncology Nutrition Space"
-            className="h-16 w-auto"
+            className="h-12 w-auto"
           />
         </Link>
 
@@ -77,9 +85,9 @@ export default function Navbar() {
           aria-expanded={menuOpen}
           className="lg:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8"
         >
-          <span className={`block h-0.5 w-6 bg-charcoal transition-transform duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-          <span className={`block h-0.5 w-6 bg-charcoal transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`block h-0.5 w-6 bg-charcoal transition-transform duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+          <span className={`block h-0.5 w-6 ${onDarkHero ? "bg-white" : "bg-charcoal"} transition-transform duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+          <span className={`block h-0.5 w-6 ${onDarkHero ? "bg-white" : "bg-charcoal"} transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+          <span className={`block h-0.5 w-6 ${onDarkHero ? "bg-white" : "bg-charcoal"} transition-transform duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
         </button>
       </nav>
 

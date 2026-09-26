@@ -27,7 +27,7 @@ function GalleryGrid({ onSelect, shouldReduce }) {
           type="button"
           variants={fadeUp}
           onClick={() => onSelect(item)}
-          className="group mb-5 block w-full break-inside-avoid overflow-hidden rounded-xl bg-white text-left shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-sage"
+          className="group mb-8 block w-full break-inside-avoid overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-sage"
         >
           <div className="overflow-hidden">
             <img
@@ -37,7 +37,7 @@ function GalleryGrid({ onSelect, shouldReduce }) {
               className="block w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
-          <div className="p-5">
+          <div className="mt-3 border-t border-neutral pt-4">
             <p className="font-body text-xs uppercase tracking-widest text-sage mb-2">
               Outreach highlight
             </p>

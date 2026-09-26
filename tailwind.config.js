@@ -27,10 +27,13 @@ export default {
         neutral: "#EAEAEA",
         // Text — logo navy
         charcoal:"#273548",
+        // Deep charcoal derived from the existing brand charcoal.
+        "charcoal-950": "color-mix(in srgb, #273548 88%, #000)",
       },
       fontFamily: {
-        heading: ["Playfair Display", "Georgia", "serif"],
+        heading: ["Fraunces", "Georgia", "serif"],
         body:    ["Inter", "system-ui", "sans-serif"],
+        mono:    ["JetBrains Mono", "ui-monospace", "monospace"],
       },
       spacing: {
         "18": "4.5rem",
