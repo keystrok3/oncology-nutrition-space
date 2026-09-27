@@ -610,80 +610,6 @@ function OutreachHighlights({ shouldReduce }) {
   );
 }
 
-function PartnerStrip({ shouldReduce }) {
-  const { ref, isInView } = useReveal();
-  const partners = [
-    { name: "KENCO", image: "/images/partners/kenco-logo.jpg" },
-    { name: "NCI-Kenya", image: "/images/partners/nci-kenya-logo.png", dark: true },
-    { name: "Kenyatta National Hospital", image: "/images/partners/knh-logo.jpg" },
-    { name: "National Cancer Control Programme", image: "/images/partners/nccp-logo.jpg" },
-    { name: "Nakuru Hospice" },
-  ];
-
-  return (
-    <section className="border-y border-neutral/70 bg-cream py-12 md:py-16" ref={ref}>
-      <div className="container-wide px-6 md:px-12 lg:px-24">
-        <motion.div
-          className="mb-8 flex flex-col items-center gap-3 text-center"
-          variants={useStaggerVariants(shouldReduce, 0.08)}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          <motion.p
-            variants={useFadeUpVariants(shouldReduce)}
-            className="font-mono text-[0.65rem] uppercase tracking-widest text-sage"
-          >
-            Working alongside
-          </motion.p>
-          <motion.h2
-            variants={useFadeUpVariants(shouldReduce)}
-            className="font-heading text-2xl text-charcoal md:text-3xl"
-          >
-            Partners & Sponsors
-          </motion.h2>
-        </motion.div>
-
-        <motion.div
-          className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5"
-          variants={useStaggerVariants(shouldReduce, 0.08)}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          {partners.map(({ name, image, dark }) => (
-            <motion.div
-              key={name}
-              variants={useFadeUpVariants(shouldReduce)}
-              className={`flex min-h-24 items-center justify-center rounded-lg border border-neutral px-4 py-3 ${dark ? "bg-charcoal" : "bg-white"}`}
-            >
-              {image ? (
-                <img src={image} alt={name} loading="lazy" className="max-h-16 w-full object-contain" />
-              ) : (
-                <span className="font-heading text-center text-base text-charcoal">{name}</span>
-              )}
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <motion.figure
-          variants={useFadeUpVariants(shouldReduce)}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="mt-8 overflow-hidden rounded-xl border border-neutral bg-white p-3 md:p-6"
-        >
-          <img
-            src="/images/partners/national-cancer-survivors-day-2026-sponsors.jpg"
-            alt="Event sponsor logos: Ministry of Health, National Cancer Control Programme, Kenyatta National Hospital, Texas Cancer Centre, La Roche-Posay, ANT, Oncology Nutrition Space, Kilele Health Association, Sukuma, Guru Nanak Hospital, RFH Healthcare, Henzo Kenya, CMMB, and Kevian."
-            loading="lazy"
-            className="mx-auto h-auto w-full max-w-5xl"
-          />
-          <figcaption className="mt-3 text-center font-mono text-[0.65rem] uppercase tracking-widest text-charcoal/50">
-            National Cancer Survivors Day Walk · 2026
-          </figcaption>
-        </motion.figure>
-      </div>
-    </section>
-  );
-}
 // ── Blog Preview ──────────────────────────────────────────────
 function BlogPreview({ shouldReduce }) {
   const { ref, isInView } = useReveal();
@@ -932,7 +858,6 @@ export default function Home() {
       <TheProblem shouldReduce={shouldReduce} />
       <WhatWeDo shouldReduce={shouldReduce} />
       <OutreachHighlights shouldReduce={shouldReduce} />
-      <PartnerStrip shouldReduce={shouldReduce} />
       {/* <BlogPreview shouldReduce={shouldReduce} /> */}
       {/* <Testimonials shouldReduce={shouldReduce} /> */}
       <CTABanner shouldReduce={shouldReduce} />
