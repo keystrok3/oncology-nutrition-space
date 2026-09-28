@@ -11,12 +11,6 @@ export const GALLERY_ITEMS = [
     title: "Nairobi Meetup & Nutrition Awareness Day",
     description: "Held at SOS International Hall.",
   })),
-  ...Array.from({ length: 5 }, (_, index) => ({
-    image: `/images/outreach/nci-0${index + 1}.jpeg`,
-    alt: `National Cancer Survivors Walk 2026 photo ${index + 1}`,
-    title: "National Cancer Survivors Walk 2026",
-    description: "ONS in partnership with KENCO, NCI-Kenya, and KNH.",
-  })),
   ...Array.from({ length: 3 }, (_, index) => ({
     image: `/images/outreach/vihiga-0${index + 1}.jpeg`,
     alt: `Vihiga community outreach photo ${index + 1}`,
@@ -29,5 +23,4 @@ export const FEATURED_GALLERY_ITEMS = [
   GALLERY_ITEMS[0],
   GALLERY_ITEMS[6],
   GALLERY_ITEMS[9],
-  GALLERY_ITEMS[14],
 ];
