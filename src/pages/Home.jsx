@@ -575,7 +575,8 @@ function OutreachHighlights({ shouldReduce }) {
           <p className="font-body text-base text-charcoal/75 leading-relaxed max-w-2xl mx-auto">
             Our outreach work includes Nakuru, Nairobi, and Vihiga. We also
             actively participate in and partner with government initiatives,
-            including the National Cancer Control (NCI) project this year.
+            including the National Cancer Control (NCI) project and the 
+            National Cancer Survivors Walk by KENCO this year.
           </p>
         </motion.div>
 
